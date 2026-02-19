@@ -3,3 +3,7 @@
 
 #node_modules
 node_modules
+
+
+#removing bootstrap from gitview
+bootstrap-5.3.8-dist
