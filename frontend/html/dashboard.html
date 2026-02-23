@@ -91,7 +91,10 @@
                   />
                 </div>
                 <div>
-                  <button class="btn btn-primary mt-3" id="spoed-aanvraag-btn">
+                  <button
+                    class="btn btn-primary mt-3 btn-outline-warning"
+                    id="spoed-aanvraag-btn"
+                  >
                     Aanvraag Indienen
                   </button>
                 </div>
@@ -102,14 +105,12 @@
         <section class="kritieke-voorraad-overzicht">
           <div class="container-fluid">
             <h3>Kritieke Voorraad Overzicht</h3>
-            <div class="kritieke-overzicht-body">
-              <!-- Need to find a fitting boostrapclass -->
-              <div class="">
-                <!-- Have to implement dynamic number fetching for the total amount of 'kritieke' en 'laag' voorraad-->
-                <input type="text" value="kritiek-alert" readonly />
-                <input type="text" value="laag-alert" readonly />
-                <!----------------------------------------------------------------------------------------->
-              </div>
+            <!-- Need to find a fitting boostrapclass -->
+            <div class="d-flex gap-2">
+              <!-- Have to implement dynamic number fetching for the total amount of 'kritieke' en 'laag' voorraad-->
+              <input type="text" value="kritiek-alert" readonly />
+              <input type="text" value="laag-alert" readonly />
+              <!----------------------------------------------------------------------------------------->
             </div>
             <!-- Need to find a fitting boostrapclass -->
             <div class="">
@@ -121,9 +122,7 @@
                   placeholder="Zoek in kritieke voorraad"
                 />
               </search>
-            </div>
-            <!-- Need to find a fitting boostrapclass -->
-            <div class="">
+              <!-- Need to find a fitting boostrapclass -->
               <select class="form-select" id="kritieke-voorraadneveau-filter">
                 <option value="" selected>Alle voorraadniveaus</option>
                 <option value=""></option>
@@ -179,9 +178,9 @@
                     3 zuurstofbommen direct nodig voor spoedgevallen Afdeling:
                     SEH 23-2-2026, 10:45:59
                   </p>
-                  <div class="grid">
+                  <div class="">
                     <button
-                      class="btn btn-primary mt-3"
+                      class="btn btn-primary mt-3 btn-danger"
                       id="spoed-aanvraag-btn"
                     >
                       Annuleren
@@ -201,9 +200,9 @@
                     3 zuurstofbommen direct nodig voor spoedgevallen Afdeling:
                     SEH 23-2-2026, 10:45:59
                   </p>
-                  <div class="grid">
+                  <div class="">
                     <button
-                      class="btn btn-primary mt-3"
+                      class="btn btn-primary mt-3 btn-danger"
                       id="spoed-aanvraag-btn"
                     >
                       Annuleren
