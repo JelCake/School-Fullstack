@@ -50,7 +50,7 @@
 
     <!-- Main Dashboard interface -->
     <main class="container-fluid py-4">
-      <!-- header -->
+      <!-- Header of the page -->
       <section class="card-header">
         <h1 class="main-dashboard text-center">Dashboard</h1>
       </section>
@@ -60,8 +60,9 @@
           <div class="container-fluid">
             <div class="spoed-aanvraag">
               <h3>Spoed Aanvraag</h3>
-              <div class="spoed-aanvraag-body">
+              <div class="spoed-aanvraag-body form-control">
                 <div>
+                  <!-- Need to implement dynamic fetching for searchup -->
                   <label for="spoed-aanvraag-input"
                     >Zoek en/of selecteer supplies:</label
                   >
@@ -73,6 +74,7 @@
                   />
                 </div>
                 <div>
+                  <!-- Need to implement dynamic fetching for searchup -->
                   <label for="afdelings-aanvraag-input">Afdeling:</label>
                   <input
                     class="form-control"
@@ -82,15 +84,17 @@
                   />
                 </div>
                 <div>
-                  <label for="noodsituatie">Noodsituatie:</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="noodsituatie-input"
-                    placeholder="Voer noodsituatie in"
-                  />
+                  <!-- Need to make it so it autosizes to the size of the 'Noodsituatie section/div' -->
+                  <label class="d-block" for="nood-situatie-info"
+                    >Noodsituatie:</label
+                  >
+                  <textarea
+                    name="nood-situatie-info"
+                    id="nood-situatie-info"
+                  ></textarea>
                 </div>
                 <div>
+                  <!-- Need to make the button functional to submit a req -->
                   <button
                     class="btn btn-primary mt-3 btn-outline-warning"
                     id="spoed-aanvraag-btn"
@@ -105,7 +109,6 @@
         <section class="kritieke-voorraad-overzicht">
           <div class="container-fluid">
             <h3>Kritieke Voorraad Overzicht</h3>
-            <!-- Need to find a fitting boostrapclass -->
             <div class="d-flex gap-2">
               <!-- Have to implement dynamic number fetching for the total amount of 'kritieke' en 'laag' voorraad-->
               <input type="text" value="kritiek-alert" readonly />
@@ -115,6 +118,7 @@
             <!-- Need to find a fitting boostrapclass -->
             <div class="">
               <search>
+                <!-- Need to implement dynamic fetching for searchup -->
                 <input
                   class="form-control"
                   type="text"
@@ -122,13 +126,14 @@
                   placeholder="Zoek in kritieke voorraad"
                 />
               </search>
-              <!-- Need to find a fitting boostrapclass -->
+              <!-- Need to implement dynamic fetching for searchup -->
               <select class="form-select" id="kritieke-voorraadneveau-filter">
                 <option value="" selected>Alle voorraadniveaus</option>
                 <option value=""></option>
                 <option value=""></option>
                 <option value=""></option>
               </select>
+              <!-- Need to implement dynamic fetching for searchup -->
               <select class="form-select" id="alle-categorie-filter">
                 <option value="" selected>Alle categorieën</option>
                 <option value=""></option>
@@ -137,9 +142,9 @@
               </select>
             </div>
             <div class="card">
+              <!-- Need to implement dynamic fetching of kritieke voorraad items -->
               <h5>Kritieke Voorraad</h5>
               <div class="kritieke-voorraad-list">
-                <!-- Need to implement dynamic fetching of kritieke voorraad items -->
                 <p>Kritieke Voorraad Item 1</p>
                 <p>Kritieke Voorraad Item 2</p>
                 <p>Kritieke Voorraad Item 3</p>
@@ -150,17 +155,18 @@
         </section>
         <section class="container-fluid">
           <h3>Meldingen</h3>
-          <!-- Need to find a fitting boostrapclass -->
           <div class="">
             <!-- Have to implement dynamic number fetching for the total amount of 'kritieke' en 'laag' voorraad-->
             <input type="text" value="Spoemeldingen" readonly />
-            <!----------------------------------------------------------------------------------------->
+
+            <!-- Need to implement dynamic fetching for searchup -->
             <select class="form-select" id="alle-meldingen-filter">
               <option value="" selected>Alle meldingen</option>
               <option value=""></option>
               <option value=""></option>
               <option value=""></option>
             </select>
+            <!-- Need to implement dynamic fetching for searchup -->
             <select class="form-select" id="meldingen-time-filter">
               <option value="" selected>latest</option>
               <option value=""></option>
@@ -168,9 +174,9 @@
               <option value=""></option>
             </select>
             <div class="card">
+              <!-- Need to implement dynamic fetching to see if there are alerts -->
               <h5>Kritieke Meldingen</h5>
               <div class="kritieke-voorraad-list">
-                <!-- Need to implement dynamic fetching of kritieke voorraad items -->
                 <div class="card">
                   <input type="text" value="SPOED" readonly />
                   <h4>Test</h4>
@@ -179,6 +185,7 @@
                     SEH 23-2-2026, 10:45:59
                   </p>
                   <div class="">
+                    <!-- Need to make the buttons function ('Annuleren' en 'Bevestigen') -->
                     <button
                       class="btn btn-primary mt-3 btn-danger"
                       id="spoed-aanvraag-btn"
@@ -213,6 +220,7 @@
                     >
                       Bevestigen
                     </button>
+                    <!-- ------------------------------------------ -->
                   </div>
                 </div>
               </div>
