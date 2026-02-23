@@ -18,6 +18,7 @@
         <h1 class="h1-title mb-1">Medsupply Manager RKZ</h1>
         <p class="p-subtitle mb-4">Voorraadbeheer voor medische supplies</p>
 
+        <!-- rollen kiezen -->
         <div class="login-box shadow-lg p-4">
             <form action="/login" method="post">
                 <div class="mb-3">
@@ -37,20 +38,24 @@
                 </div>
 
                 
+                <!-- email -->
                 <div class="mb-3">
                     <label class="form-label fw-bold">Email</label>
                     <input class="form-control rounded-pill" type="email" name="email" required>
                 </div>
 
+                <!-- wachtwoord -->
                 <div class="mb-4">
                     <label class="form-label fw-bold">Wachtwoord</label>
                     <input class="form-control rounded-pill" type="password" name="wachtwoord" required>
                 </div>
 
+                <!-- inloggen button -->
                 <div class="d-grid">
                     <button id="btn-login" class="btn rounded-pill fw-bold" type="submit">Inloggen</button>
                 </div>
 
+                <!-- warning text -->
                 <p class="warning-text mt-4">Let op: Alleen medewerkers met een geldig ziekenhuis e-mailadres kunnen inloggen.</p>
             </form>
         </div>
