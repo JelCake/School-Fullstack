@@ -41,7 +41,7 @@
           <div class="navbar-nav nav-utils">
             <a class="nav-link" href="../html/profile.html">Profiel</a>
             <a class="nav-link" href="../html/settings.html">Instellingen</a>
-            <a class="nav-link text-danger" href="../html/log-out.html"
+            <a class="nav-link text-danger" href="../html/inlog.html"
               >Log Out</a
             >
           </div>
@@ -55,7 +55,7 @@
       <h1 class="text-center">Dashboard</h1>
 
       <!-- Spoedaanvraag formulier -->
-      <section class="card stat-card">
+      <section class="card stat-card bg-danger">
         <h3 class="card-header mb-2">Spoed Aanvraag</h3>
         <div class="card-body">
           <div class="mb-2">
@@ -98,7 +98,7 @@
             <button class="btn btn-warning" id="spoed-aanvraag-btn">
               Aanvraag Indienen
             </button>
-            <button class="btn btn-danger" id="wissen">Wissen</button>
+            <button class="btn border btn-danger" id="wissen">Wissen</button>
           </div>
         </div>
       </section>
@@ -107,12 +107,18 @@
       <section class="card stat-card">
         <!-- Header of kritieke voorraad overzicht -->
         <h3 class="card-header">Kritieke Voorraad Overzicht</h3>
-        <div class="d-flex justify-content-center form-control bg-danger">
-          <!-- Have to implement dynamic number fetching for the total amount of 'kritieke' en 'laag' voorraad-->
-          <input type="text" value="kritiek-alert" readonly />
-          <input type="text" value="laag-alert" readonly />
-        </div>
+
         <div class="card-body">
+          <!--  Gives back the total amount of kritiek and laag alerts -->
+          <div
+            class="d-flex justify-content-center form-control bg-warning mb-4"
+          >
+            <!-- Have to implement dynamic number fetching for the total amount of 'kritieke' en 'laag' voorraad-->
+            <input type="text" value="kritiek-alert" readonly />
+            <input type="text" value="laag-alert" readonly />
+          </div>
+
+          <!-- Filters for kritieke voorraad :| -->
           <div class="mb-2">
             <search>
               <!-- Need to implement dynamic fetching for searchup -->
@@ -142,38 +148,46 @@
               <option value=""></option>
             </select>
           </div>
+
+          <!-- List of all critical or umm... laag? ...voorraad. -->
           <div class="list-group list-group-flush card">
             <!-- Need to implement dynamic fetching of kritieke voorraad items -->
             <h5 class="card-header">Kritieke Voorraad</h5>
-            <div class="list-group-item list-group-item-danger">
-              <ol>
-                Item 1
-                <p class="small">critical</p>
-              </ol>
+            <div class="list-group-item list-group-item-danger card">
+              <h4 class="fw-bold">Item 1</h4>
+              <p class="small">critical</p>
             </div>
-            <div class="list-group-item list-group-item-danger">
-              <ol>
-                Item 1
-                <p class="small">critical</p>
-              </ol>
+            <div class="list-group-item list-group-item-danger card">
+              <h4 class="fw-bold">Item 1</h4>
+              <p class="small">critical</p>
             </div>
-            <div class="list-group-item list-group-item-danger">
-              <ol>
-                Item 1
-                <p class="small">critical</p>
-              </ol>
+            <div class="list-group-item list-group-item-warning card">
+              <h4 class="fw-bold">Item 1</h4>
+              <p class="small">critical</p>
             </div>
+            <!-- ------------------------------ -->
           </div>
         </div>
       </section>
 
       <!-- Medingen overzicht -->
       <section class="card stat-card">
-        <h3 class="card-header mb-2">Meldingen</h3>
-        <div>
-          <div>
+        <h3 class="card-header">Meldingen</h3>
+
+        <div class="card-body">
+          <div class="mb-2">
             <!-- Have to implement dynamic number fetching for the total amount of 'kritieke' en 'laag' voorraad-->
-            <input class="mb-2" type="text" value="Spoemeldingen" readonly />
+            <input
+              class="d-flex form-control bg-warning mb-2"
+              type="text"
+              value="Spoemeldingen (number#67)"
+              readonly
+            />
+
+            <!-- Filter options for meldingen -->
+            <label class="label" for="alle-meldingen-filter"
+              >melding type(spoed of ?):</label
+            >
 
             <!-- Need to implement dynamic fetching for searchup -->
             <select class="form-select mb-2" id="alle-meldingen-filter">
@@ -182,53 +196,76 @@
               <option value=""></option>
               <option value=""></option>
             </select>
+
+            <label class="label" for="alle-time-filter"
+              >Meldingen time?(Latest of 24u?):</label
+            >
+
             <!-- Need to implement dynamic fetching for searchup -->
-            <select class="form-select mb-2" id="meldingen-time-filter">
-              <option value="" selected>latest</option>
+            <select class="form-select mb-4" id="meldingen-time-filter">
+              <option value="" selected>Latest</option>
               <option value=""></option>
               <option value=""></option>
               <option value=""></option>
             </select>
           </div>
 
-          <div>
+          <div class="md-4 card stat-card">
             <!-- Need to implement dynamic fetching to see if there are alerts -->
-            <h5>Kritieke Meldingen</h5>
+            <h5 class="card-header">Kritieke Meldingen</h5>
 
-            <input type="text" value="SPOED" readonly />
-            <h4>Test</h4>
-            <p>
-              3 zuurstofbommen direct nodig voor spoedgevallen Afdeling: SEH
-              23-2-2026, 10:45:59
-            </p>
+            <!-- Meldingen list -->
+            <div class="list-group">
+              <!-- -------------------------------------- -->
+              <section class="card list-group-item mb-4">
+                <!-- Maybe label doesn't have to used here -->
+                <label class="border form-control bg-danger">Spoed</label>
+                <h4 class="fw-bold">Test</h4>
+                <p class="small">
+                  3 zuurstofbommen direct nodig voor spoedgevallen Afdeling: SEH
+                  23-2-2026, 10:45:59
+                </p>
 
-            <!-- Need to make the buttons function ('Annuleren' en 'Bevestigen') -->
-            <button
-              class="btn btn-primary mt-3 btn-danger"
-              id="spoed-aanvraag-btn"
-            >
-              Annuleren
-            </button>
-            <button class="btn btn-primary mt-3" id="spoed-aanvraag-btn">
-              Bevestigen
-            </button>
+                <div>
+                  <!-- Need to make the buttons function ('Annuleren' en 'Bevestigen') -->
+                  <button
+                    class="btn btn-primary mt-3 btn-danger"
+                    id="spoed-aanvraag-btn"
+                  >
+                    Annuleren
+                  </button>
+                  <button class="btn btn-primary mt-3" id="spoed-aanvraag-btn">
+                    Bevestigen
+                  </button>
+                </div>
+              </section>
+              <!-- ----------------------------- -->
 
-            <input type="text" value="SPOED" readonly />
-            <h4>Test</h4>
-            <p>
-              3 zuurstofbommen direct nodig voor spoedgevallen Afdeling: SEH
-              23-2-2026, 10:45:59
-            </p>
+              <!-- ----------------------------- -->
+              <section class="card list-group-item mb-4">
+                <!-- Maybe label doesn't have to used here -->
+                <label class="border form-control bg-warning">Critical?</label>
+                <h4 class="fw-bold">Test</h4>
+                <p class="small">
+                  3 zuurstofbommen direct nodig voor spoedgevallen Afdeling: SEH
+                  23-2-2026, 10:45:59
+                </p>
 
-            <button
-              class="btn btn-primary mt-3 btn-danger"
-              id="spoed-aanvraag-btn"
-            >
-              Annuleren
-            </button>
-            <button class="btn btn-primary mt-3" id="spoed-aanvraag-btn">
-              Bevestigen
-            </button>
+                <div>
+                  <!-- Need to make the buttons function ('Annuleren' en 'Bevestigen') -->
+                  <button
+                    class="btn btn-primary mt-3 btn-danger"
+                    id="spoed-aanvraag-btn"
+                  >
+                    Annuleren
+                  </button>
+                  <button class="btn btn-primary mt-3" id="spoed-aanvraag-btn">
+                    Bevestigen
+                  </button>
+                </div>
+              </section>
+              <!-- ----------------------------- -->
+            </div>
           </div>
         </div>
       </section>
