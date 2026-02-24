@@ -94,7 +94,7 @@
                 id="nood-situatie-info"
               ></textarea>
             </div>
-            <div class="d-flex gap-2">
+            <div class="gap-2">
               <!-- Need to make the button functional to submit a req -->
               <button class="btn btn-warning" id="spoed-aanvraag-btn">
                 Aanvraag Indienen
@@ -115,8 +115,18 @@
               class="d-flex justify-content-center form-control bg-warning mb-4"
             >
               <!-- Have to implement dynamic number fetching for the total amount of 'kritieke' en 'laag' voorraad-->
-              <input type="text" value="kritiek-alert" readonly />
-              <input type="text" value="laag-alert" readonly />
+              <input
+                class="d-flex form-control"
+                type="text"
+                value="kritiek-alert"
+                readonly
+              />
+              <input
+                class="d-flex form-control"
+                type="text"
+                value="laag-alert"
+                readonly
+              />
             </div>
 
             <!-- Filters for kritieke voorraad :| -->
