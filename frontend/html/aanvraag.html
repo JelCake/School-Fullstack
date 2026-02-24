@@ -39,7 +39,7 @@
           <div class="navbar-nav nav-utils">
             <a class="nav-link" href="../html/profile.html">Profiel</a>
             <a class="nav-link" href="../html/settings.html">Instellingen</a>
-            <a class="nav-link text-danger" href="../html/log-out.html"
+            <a class="nav-link text-danger" href="../html/inlog.html"
               >Log Out</a
             >
           </div>
@@ -47,95 +47,145 @@
       </div>
     </header>
 
-    <main>
-      <!-- Header of page -->
-      <h1 class="text-center">Aanvragen</h1>
-      <section class="main-aanvraag-body d-flex justify-content-center">
-        <section>
-          <!-- Just header of the form -->
-          <h4>Normale aanvraag</h4>
-          <p>Voor reguliere voorraadaanvragen zonder spoed</p>
-          <!-- ----------- -->
-          <section class="aanvraag-body">
-            <div class="filters d-flex gap-4 form-control">
-              <div>
-                <!-- Create a dynamic fetching function to get supply type data of the supply in storage-->
-                <label for="search-select-supplies-filter"
-                  >Zoek en/of select supply type:</label
+    <main class="container py-4">
+      <!-- Title of the page -->
+      <h1 class="text-center mb-4">Aanvragen</h1>
+      <!-- Aanvraag formulier of the page -->
+      <section class="card mx-auto">
+        <div class="card-header bg-white pt-3">
+          <h4 class="mb-1 fw-bold">Normale aanvraag</h4>
+          <p class="small">Voor reguliere voorraadaanvragen zonder spoed</p>
+        </div>
+
+        <!-- body of he normale aanvraag fomulier -->
+        <div class="card-body">
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <!-- Impliment a way to be able to type and or search up for supplies type-->
+              <!-- Make not required if possibel(be able to get the supply type just by the supply name) -->
+              <label
+                class="form-label fw-bold"
+                for="search-select-supplies-filter"
+                >Zoek en/of select supply type:</label
+              >
+              <input
+                class="form-control mb-3"
+                type="text"
+                id="search-select-supplies-filter"
+                placeholder="Voer supply type in"
+              />
+
+              <!-- Impliment a way to insert the amount you want to request, also be
+              able to see total storage -->
+              <label class="form-label fw-bold" for="aantal-supplies-selecter"
+                >Aantal:</label
+              >
+              <input
+                class="form-control"
+                type="number"
+                id="aantal-supplies-selecter"
+                placeholder="Voer aantal in"
+              />
+            </div>
+
+            <!-- Impliment a way to be able to type and or search up for supplies-->
+            <div class="col-md-6">
+              <label class="form-label fw-bold" for="naam-supply-selecter"
+                >Naam van supplies:</label
+              >
+              <input
+                class="form-control mb-3"
+                type="text"
+                id="naam-supply-selecter"
+                placeholder="Voer/zoek op supply naam"
+              />
+
+              <!-- Impliment a way to be able to type and or search up for afdeling name-->
+              <label class="form-label fw-bold" for="naam-afdeling-selector"
+                >Afdeling:</label
+              >
+              <input
+                class="form-control"
+                type="text"
+                id="naam-afdeling-selector"
+                placeholder="Voer afdelingsnaam in"
+              />
+            </div>
+          </div>
+
+          <!-- Select the urgency(how quickly) you need to be able to get the supply-->
+          <!-- Impliment a way to pull this data -->
+          <div class="mb-4 p-3 border rounded">
+            <h6 class="fw-bold">Urgentie</h6>
+            <div class="d-flex flex-column gap-2">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="urgentie"
+                  id="normal"
+                  checked
+                />
+                <label for="normal">Normaal (binnen 3-5 dagen)</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="urgentie"
+                  id="verhoogd"
+                />
+                <label for="verhoogd">Verhoogd (binnen 1-2 dagen)</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="urgentie"
+                  id="hoog"
+                />
+                <label class="form-check-label" for="hoog"
+                  >Hoog (binnen 24 uur)</label
                 >
-                <input
-                  class="form-control"
-                  type="text"
-                  id="search-select-supplies-filter"
-                  placeholder="Voer supply type in"
-                />
-                <!-- Create a dynamic fetching to see how much is instorage-->
-                <label for="aantal-supplies-selecter">Aantal:</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  id="aantal-supplies-selecter"
-                  placeholder="Voer noodsituatie in"
-                />
-              </div>
-              <div>
-                <!-- Create a dynamic fetching to be able to search for supply -->
-                <label for="naam-supply-selecter">Naam van supplies:</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  id="naam-supply-selecter"
-                  placeholder="Voer/zoek op supply naam"
-                />
-                <!-- Create a dynamic fetching to be able to search for 'afdelingen'-->
-                <label for="naam-afdeling-selector">Afdeling:</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  id="naam-afdeling-selector"
-                  placeholder="Voer afdelingsnaam in"
-                />
               </div>
             </div>
-            <!-- Selecter of urgency(make its data fetchable) -->
-            <div
-              class="urgency-selectors form-control d-flex flex-column gap-1"
+          </div>
+
+          <!-- A way to add extra info -->
+          <!-- Impliment a way to pull this data out of the box -->
+          <div class="mb-4">
+            <h6 class="fw-bold">Opmerkingen (optioneel)</h6>
+            <textarea
+              class="form-control"
+              name="opmerkingen"
+              rows="4"
+              placeholder="Waarom is deze voorraad nodig?"
+            ></textarea>
+          </div>
+
+          <!-- Give you the data of who is asking(The User) -->
+          <!-- Impliment a way get User info from DB -->
+          <div class="mb-4">
+            <h6 class="fw-bold">Gebruikers Info</h6>
+            <textarea
+              class="form-control bg-light"
+              rows="2"
+              id="gebruiker-info"
+              readonly
             >
-              <h6>Urgentie</h6>
-              <label
-                ><input type="radio" name="normaal" /> Normaal (binner 3-5
-                dagen)</label
-              >
-              <label
-                ><input type="radio" name="verhoogd" />Verhoogd (binnen 1-2
-                dagen)</label
-              >
-              <label
-                ><input type="radio" name="hoog" /> Hoog (binner 24 uur)
-              </label>
-            </div>
-            <!-- Where you can give extra context(Why you need the medicine) -->
-            <div class="opmerkingen-input form-control">
-              <h6>Opmerkingen(optioneel)</h6>
-              <textarea name="opmerkingen" rows="5" cols="50"></textarea>
-            </div>
-            <div class="form-control">
-              <!-- Needs to be able to get user-info -->
-              <h6>Gebruikers Info</h6>
-              <textarea rows="2" cols="50" id="gebruiker-info" readonly>
-Naam: fij
-Rol: Spoedarts</textarea
-              >
-            </div>
-            <!-- Make the button fuction(sending the 'Aanvraag') -->
-            <div class="d-flex gap-2 form-control">
-              <button class="btn btn-primary mt-3">Aanvraag versturen</button>
-              <button class="btn btn-outline-dark mt-3 btn-danger">
-                Wissen
-              </button>
-            </div>
-          </section>
-        </section>
+Rol: &
+Afdeling: aangeven
+</textarea
+            >
+          </div>
+
+          <!-- Buttons to send data to the DB -->
+          <!-- Make funtional -->
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary">Aanvraag versturen</button>
+            <button class="btn btn-danger">Wissen</button>
+          </div>
+        </div>
       </section>
     </main>
 
