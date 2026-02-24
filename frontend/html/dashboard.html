@@ -10,30 +10,229 @@
   </head>
 
   <body>
-    <header id="nav-header">
-      <!-- Waar LOGO kan -->
-      <img src="" class="" />
-      <nav class="nav-bar">
-        <div class="nav-links">
-          <a class="nav-link" href="../html/dashboard.html">Dashboard</a>
-          <a class="nav-link" href="../html/aanvraag.html">Aanvraag</a>
-          <a class="nav-link" href="../html/totale-voorraad.html"
-            >Totale Voorraad</a
-          >
-          <a class="nav-link" href="../html/statistieken.html">Statistieken</a>
-          <a class="nav-link" href="../html/geschiedenis.html">Geschiedenis</a>
-        </div>
-        <!-- is nav-utils en geen utilities vanwege bootstrap -->
-        <div class="nav-utils">
-          <a class="nav-link" href="../html/profile.html">Profiel</a>
-          <a class="nav-link" href="../html/settings.html">Instellingen</a>
-          <a class="nav-link" href="../html/log-out.html">Log Out</a>
-        </div>
-      </nav>
+    <header id="nav-header" class="navbar navbar-expand-lg sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../html/dashboard.html">
+          <img
+            src="../img/rkz-logo.jif"
+            alt="Logo"
+            width="30"
+            height="30"
+            class="d-inline-block align-top"
+          />
+        </a>
+
+        <nav class="nav-bar collapse navbar-collapse" id="navbarNav">
+          <div class="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
+            <a class="nav-link" href="../html/dashboard.html">Dashboard</a>
+            <a class="nav-link" href="../html/aanvraag.html">Aanvraag</a>
+            <a class="nav-link" href="../html/totale-voorraad.html"
+              >Totale Voorraad</a
+            >
+            <a class="nav-link" href="../html/statistieken.html"
+              >Statistieken</a
+            >
+            <a class="nav-link" href="../html/geschiedenis.html"
+              >Geschiedenis</a
+            >
+          </div>
+
+          <div class="navbar-nav nav-utils">
+            <a class="nav-link" href="../html/profile.html">Profiel</a>
+            <a class="nav-link" href="../html/settings.html">Instellingen</a>
+            <a class="nav-link text-danger" href="../html/log-out.html"
+              >Log Out</a
+            >
+          </div>
+        </nav>
+      </div>
     </header>
 
-    <main></main>
+    <!-- Main Dashboard interface -->
+    <main class="container-fluid py-4">
+      <!-- Header of the page -->
+      <section class="card-header">
+        <h1 class="main-dashboard text-center">Dashboard</h1>
+      </section>
+      <!-- main body of the page -->
+      <div class="main-dashboard-body row row-cols-3 vh-100">
+        <section class="spoed-aanvraag-body">
+          <div class="container-fluid">
+            <div class="spoed-aanvraag">
+              <h3>Spoed Aanvraag</h3>
+              <div class="spoed-aanvraag-body form-control">
+                <div>
+                  <!-- Need to implement dynamic fetching for searchup -->
+                  <label for="spoed-aanvraag-input"
+                    >Zoek en/of selecteer supplies:</label
+                  >
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="spoed-aanvraag-input"
+                    placeholder="Voer aanvraagcode in"
+                  />
+                </div>
+                <div>
+                  <!-- Need to implement dynamic fetching for searchup -->
+                  <label for="afdelings-aanvraag-input">Afdeling:</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="afdelings-aanvraag-input"
+                    placeholder="Voer afdelingsnaam in"
+                  />
+                </div>
+                <div>
+                  <!-- Need to make it so it autosizes to the size of the 'Noodsituatie section/div' -->
+                  <label class="d-block" for="nood-situatie-info"
+                    >Noodsituatie:</label
+                  >
+                  <textarea
+                    name="nood-situatie-info"
+                    id="nood-situatie-info"
+                  ></textarea>
+                </div>
+                <div>
+                  <!-- Need to make the button functional to submit a req -->
+                  <button
+                    class="btn btn-primary mt-3 btn-outline-warning"
+                    id="spoed-aanvraag-btn"
+                  >
+                    Aanvraag Indienen
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="kritieke-voorraad-overzicht">
+          <div class="container-fluid">
+            <h3>Kritieke Voorraad Overzicht</h3>
+            <div class="d-flex gap-2">
+              <!-- Have to implement dynamic number fetching for the total amount of 'kritieke' en 'laag' voorraad-->
+              <input type="text" value="kritiek-alert" readonly />
+              <input type="text" value="laag-alert" readonly />
+              <!----------------------------------------------------------------------------------------->
+            </div>
+            <!-- Need to find a fitting boostrapclass -->
+            <div class="">
+              <search>
+                <!-- Need to implement dynamic fetching for searchup -->
+                <input
+                  class="form-control"
+                  type="text"
+                  id="kritieke-voorraad-search"
+                  placeholder="Zoek in kritieke voorraad"
+                />
+              </search>
+              <!-- Need to implement dynamic fetching for searchup -->
+              <select class="form-select" id="kritieke-voorraadneveau-filter">
+                <option value="" selected>Alle voorraadniveaus</option>
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+              </select>
+              <!-- Need to implement dynamic fetching for searchup -->
+              <select class="form-select" id="alle-categorie-filter">
+                <option value="" selected>Alle categorieën</option>
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+              </select>
+            </div>
+            <div class="card">
+              <!-- Need to implement dynamic fetching of kritieke voorraad items -->
+              <h5>Kritieke Voorraad</h5>
+              <div class="kritieke-voorraad-list">
+                <p>Kritieke Voorraad Item 1</p>
+                <p>Kritieke Voorraad Item 2</p>
+                <p>Kritieke Voorraad Item 3</p>
+                <!----------------------------------------------------------------------------------------->
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="container-fluid">
+          <h3>Meldingen</h3>
+          <div class="">
+            <!-- Have to implement dynamic number fetching for the total amount of 'kritieke' en 'laag' voorraad-->
+            <input type="text" value="Spoemeldingen" readonly />
 
-    <footer></footer>
+            <!-- Need to implement dynamic fetching for searchup -->
+            <select class="form-select" id="alle-meldingen-filter">
+              <option value="" selected>Alle meldingen</option>
+              <option value=""></option>
+              <option value=""></option>
+              <option value=""></option>
+            </select>
+            <!-- Need to implement dynamic fetching for searchup -->
+            <select class="form-select" id="meldingen-time-filter">
+              <option value="" selected>latest</option>
+              <option value=""></option>
+              <option value=""></option>
+              <option value=""></option>
+            </select>
+            <div class="card">
+              <!-- Need to implement dynamic fetching to see if there are alerts -->
+              <h5>Kritieke Meldingen</h5>
+              <div class="kritieke-voorraad-list">
+                <div class="card">
+                  <input type="text" value="SPOED" readonly />
+                  <h4>Test</h4>
+                  <p>
+                    3 zuurstofbommen direct nodig voor spoedgevallen Afdeling:
+                    SEH 23-2-2026, 10:45:59
+                  </p>
+                  <div class="">
+                    <!-- Need to make the buttons function ('Annuleren' en 'Bevestigen') -->
+                    <button
+                      class="btn btn-primary mt-3 btn-danger"
+                      id="spoed-aanvraag-btn"
+                    >
+                      Annuleren
+                    </button>
+                    <button
+                      class="btn btn-primary mt-3"
+                      id="spoed-aanvraag-btn"
+                    >
+                      Bevestigen
+                    </button>
+                  </div>
+                </div>
+                <div class="card">
+                  <input type="text" value="SPOED" readonly />
+                  <h4>Test</h4>
+                  <p>
+                    3 zuurstofbommen direct nodig voor spoedgevallen Afdeling:
+                    SEH 23-2-2026, 10:45:59
+                  </p>
+                  <div class="">
+                    <button
+                      class="btn btn-primary mt-3 btn-danger"
+                      id="spoed-aanvraag-btn"
+                    >
+                      Annuleren
+                    </button>
+                    <button
+                      class="btn btn-primary mt-3"
+                      id="spoed-aanvraag-btn"
+                    >
+                      Bevestigen
+                    </button>
+                    <!-- ------------------------------------------ -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- footer/legal section of site -->
+    <footer class="text-center">
+      <p>&copy; 2024 RKZ Voorraadbeheer. Alle rechten voorbehouden.</p>
+    </footer>
   </body>
 </html>

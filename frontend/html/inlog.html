@@ -1,57 +1,64 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Business</title>
+<head>
+    <title>Medsupply Manager RKZ</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" href="/frontend/css/bootstrap.css"> 
+    
     <link rel="stylesheet" href="../css/inlog.css" />
-  </head>
+</head>
 
-  <body>
-    <main class="login-page">
-      <img class="logo" src="/img/images.jif" alt="Logo" />
+<body class="bg-rkz-blue">
+    <main class="d-flex flex-column justify-content-center align-items-center min-vh-100 container">
+        
+        <img class="logo mb-3 shadow-sm" src="/frontend/img/images.jif" alt="Logo" />
 
-      <h1 class="h1">Medsupply Manager RKZ</h1>
-      <p class="p1">Voorraadbeheer voor medische supplies</p>
+        <h1 class="h1-title mb-1">Medsupply Manager RKZ</h1>
+        <p class="p-subtitle mb-4">Voorraadbeheer voor medische supplies</p>
 
-      <div class="login-box">
-        <form action="/login" method="post">
-          <label for="role"
-            >Rol
-            <select class="area" name="rol" required>
-              <option value="verpleegkundige">Verpleegkundige</option>
-              <option value="spoedarts">Spoedarts</option>
-              <option value="arts">Arts</option>
-              <option value="specialist">Specialist</option>
-              <option value="logistieke afdeling">Logistieke afdeling</option>
-              <option value="interne apotheek">Interne apotheek</option>
-              <option value="ziekenhuismanagement">Ziekenhuismanagement</option>
-              <option value="directie">Directie</option>
-              <option value="inkoopafdeling">Inkoopafdeling</option>
-              <option value="magazijn">Magazijn</option>
-            </select>
-          </label>
+        <!-- rollen kiezen -->
+        <div class="login-box shadow-lg p-4">
+            <form action="/login" method="post">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Rol</label>
+                    <select class="form-select rounded-pill" name="rol" required>
+                        <option value="verpleegkundige">Verpleegkundige</option>
+                        <option value="arts">Arts</option>
+                        <option value="spoedarts">Spoedarts</option>
+                        <option value="specialist">Specialist</option>
+                        <option value="logistieke afdeling">Logistieke afdeling</option>
+                        <option value="interne apotheek">Interne apotheek</option>
+                        <option value="ziekenhuismanagement">Ziekenhuismanagement</option>
+                        <option value="directie">Directie</option>
+                        <option value="inkoopafdeling">Inkoopafdeling</option>
+                        <option value="magazijn">Magazijn</option>
+                    </select>
+                </div>
 
-          <label for="email">Email</label>
-          <input class="area" type="email" id="email" name="email" required />
+                
+                <!-- email -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Email</label>
+                    <input class="form-control rounded-pill" type="email" name="email" required>
+                </div>
 
-          <label for="wachtwoord">Wachtwoord</label>
-          <input
-            class="area"
-            type="password"
-            id="wachtwoord"
-            name="wachtwoord"
-            required
-          />
+                <!-- wachtwoord -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Wachtwoord</label>
+                    <input class="form-control rounded-pill" type="password" name="wachtwoord" required>
+                </div>
 
-          <button id="btn" class="area" type="submit">Inloggen</button>
+                <!-- inloggen button -->
+                <div class="d-grid">
+                    <button id="btn-login" class="btn rounded-pill fw-bold" type="submit">Inloggen</button>
+                </div>
 
-          <h2 class="h2">
-            Let op: Alleen medewerkers met een geldig ziekenhuis e-mailadres
-            kunnen inloggen.
-          </h2>
-        </form>
-      </div>
+                <!-- warning text -->
+                <p class="warning-text mt-4">Let op: Alleen medewerkers met een geldig ziekenhuis e-mailadres kunnen inloggen.</p>
+            </form>
+        </div>
     </main>
-  </body>
+</body>
 </html>
