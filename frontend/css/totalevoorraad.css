@@ -1,0 +1,21 @@
+/* Custom Status Badges */
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.badge-kritiek {
+  background-color: #fde2e2;
+  color: #d00000;
+}
+
+.badge-laag {
+  background-color: #fff4d6;
+  color: #b76e00;
+}
+
+.badge-goed {
+  background-color: #d8f3dc;
+  color: #2d6a4f;
+}

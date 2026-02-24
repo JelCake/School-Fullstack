@@ -1,38 +1,304 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Dashboard</title>
+    <title>Totale Voorraad</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="../css/totalevoorraad.css" />
     <link rel="stylesheet" href="../css/main.css" />
   </head>
 
   <body>
-    <header id="nav-header">
-      <!-- Waar LOGO kan -->
-      <img src="" class="" />
-      <nav class="nav-bar">
-        <div class="nav-links">
-          <a class="nav-link" href="../html/dashboard.html">Dashboard</a>
-          <a class="nav-link" href="../html/aanvraag.html">Aanvraag</a>
-          <a class="nav-link" href="../html/totale-voorraad.html"
-            >Totale Voorraad</a
-          >
-          <a class="nav-link" href="../html/statistieken.html">Statistieken</a>
-          <a class="nav-link" href="../html/geschiedenis.html">Geschiedenis</a>
-        </div>
-        <!-- is nav-utils en geen utilities vanwege bootstrap -->
-        <div class="nav-utils">
-          <a class="nav-link" href="../html/profile.html">Profiel</a>
-          <a class="nav-link" href="../html/settings.html">Instellingen</a>
-          <a class="nav-link" href="../html/log-out.html">Log Out</a>
-        </div>
-      </nav>
+    <header id="nav-header" class="navbar navbar-expand-lg sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../html/dashboard.html">
+          <img
+            src="../img/rkz-logo.jif"
+            alt="Logo"
+            width="30"
+            height="30"
+            class="d-inline-block align-top"
+          />
+        </a>
+
+        <nav class="nav-bar collapse navbar-collapse" id="navbarNav">
+          <div class="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
+            <a class="nav-link" href="../html/dashboard.html">Dashboard</a>
+            <a class="nav-link" href="../html/aanvraag.html">Aanvraag</a>
+            <a class="nav-link" href="../html/totale-voorraad.html"
+              >Totale Voorraad</a
+            >
+            <a class="nav-link" href="../html/statistieken.html"
+              >Statistieken</a
+            >
+            <a class="nav-link" href="../html/geschiedenis.html"
+              >Geschiedenis</a
+            >
+          </div>
+
+          <div class="navbar-nav nav-utils">
+            <a class="nav-link" href="../html/profile.html">Profiel</a>
+            <a class="nav-link" href="../html/settings.html">Instellingen</a>
+            <a class="nav-link text-danger" href="../html/inlog.html"
+              >Log Out</a
+            >
+          </div>
+        </nav>
+      </div>
     </header>
 
-    <main></main>
+    <main class="container-fluid py-4">
+      <!-- ================= PAGE HEADER ================= -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Totale Voorraad</h4>
+        <button
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#addItemModal"
+        >
+          + Nieuw Item
+        </button>
+      </div>
 
-    <footer></footer>
+      <!-- ================= STAT CARDS ================= -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-3">
+          <div class="card stat-card">
+            <div class="card-body">
+              <small class="text-muted">Totaal items</small>
+              <h4 class="fw-bold text-primary">10</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card stat-card">
+            <div class="card-body">
+              <small class="text-muted">Kritiek</small>
+              <h4 class="fw-bold text-danger">2</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card stat-card">
+            <div class="card-body">
+              <small class="text-muted">Laag</small>
+              <h4 class="fw-bold text-warning">1</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card stat-card">
+            <div class="card-body">
+              <small class="text-muted">Goed</small>
+              <h4 class="fw-bold text-success">7</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= FILTER CARD ================= -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row g-3">
+            <!-- search bar -->
+            <div class="col-md-6">
+              <label class="form-label">Zoeken</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Zoek op naam of categorie..."
+              />
+            </div>
+
+            <!-- categorie filter -->
+            <div class="col-md-3">
+              <label class="form-label">Categorie</label>
+              <select class="form-select">
+                <option>Alle categorieën</option>
+                <option>Medicatie</option>
+                <option>Gassen</option>
+                <option>Beschermingsmiddelen</option>
+                <option>Apparatuur</option>
+                <option>Hygiëne</option>
+                <option>Wondverzorging</option>
+                <option>Infuusmateriaal</option>
+              </select>
+            </div>
+
+            <!-- status filter -->
+            <div class="col-md-3">
+              <label class="form-label">Status</label>
+              <select class="form-select">
+                <option>Alle statussen</option>
+                <option>Kritiek</option>
+                <option>Laag</option>
+                <option>Normaal</option>
+                <option>Goed</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- csv -->
+          <div class="d-flex justify-content-between mt-4">
+            <small class="text-muted">10 van 10 items</small>
+            <button class="btn btn-outline-secondary btn-sm">
+              Exporteren naar CSV
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TABLE ================= -->
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Supply</th>
+                <th>Categorie</th>
+                <th>Status</th>
+                <th>Voorraad</th>
+                <th>Locatie</th>
+                <th>Leverancier</th>
+                <th>Verbruik</th>
+                <th>Laatste bestelling</th>
+                <th>Acties</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Zuurstofbommen (O2)</strong>
+                </td>
+                <td>Gassen</td>
+                <td><span class="badge badge-laag">Laag</span></td>
+                <td>
+                  8 stuks<br />
+                  <small class="text-muted">Min: 10 / Max: 50</small>
+                </td>
+                <td>Centrale voorraad</td>
+                <td>Linde Gas</td>
+                <td>2.3 per dag</td>
+                <td>27-11-2025</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary">
+                    Details
+                  </button>
+                  <button class="btn btn-sm btn-outline-success">
+                    + Voorraad
+                  </button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <strong>Paracetamol 500mg</strong><br />
+                  <small class="text-danger">Verloopt: 14-8-2026</small>
+                </td>
+                <td>Medicatie</td>
+                <td><span class="badge badge-goed">Goed</span></td>
+                <td>
+                  245 dozen<br />
+                  <small class="text-muted">Min: 100 / Max: 500</small>
+                </td>
+                <td>Apotheek</td>
+                <td>Pharma Direct</td>
+                <td>12 per dag</td>
+                <td>14-11-2025</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary">
+                    Details
+                  </button>
+                  <button class="btn btn-sm btn-outline-success">
+                    + Voorraad
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="p-3">
+          <ul class="pagination justify-content-end mb-0">
+            <li class="page-item disabled">
+              <a class="page-link">Vorige</a>
+            </li>
+            <li class="page-item active">
+              <a class="page-link">1</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link">2</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link">Volgende</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </main>
+
+    <!-- ================= MODAL ================= -->
+    <div class="modal fade" id="addItemModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nieuw Supply Item</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Naam</label>
+                <input type="text" class="form-control" />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Categorie</label>
+                <select class="form-select">
+                  <option>Medicatie</option>
+                  <option>Gassen</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Min voorraad</label>
+                <input type="number" class="form-control" />
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Max voorraad</label>
+                <input type="number" class="form-control" />
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Eenheid</label>
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">
+              Annuleren
+            </button>
+            <button class="btn btn-primary">Opslaan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="../js/bootstrap.bundle.js"></script>
   </body>
 </html>

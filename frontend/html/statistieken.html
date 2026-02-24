@@ -1,38 +1,145 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Dashboard</title>
+    <title>Statistieken</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/bootstrap.css" />
     <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/statistieken.css" />
   </head>
 
   <body>
-    <header id="nav-header">
-      <!-- Waar LOGO kan -->
-      <img src="" class="" />
-      <nav class="nav-bar">
-        <div class="nav-links">
-          <a class="nav-link" href="../html/dashboard.html">Dashboard</a>
-          <a class="nav-link" href="../html/aanvraag.html">Aanvraag</a>
-          <a class="nav-link" href="../html/totale-voorraad.html"
-            >Totale Voorraad</a
-          >
-          <a class="nav-link" href="../html/statistieken.html">Statistieken</a>
-          <a class="nav-link" href="../html/geschiedenis.html">Geschiedenis</a>
-        </div>
-        <!-- is nav-utils en geen utilities vanwege bootstrap -->
-        <div class="nav-utils">
-          <a class="nav-link" href="../html/profile.html">Profiel</a>
-          <a class="nav-link" href="../html/settings.html">Instellingen</a>
-          <a class="nav-link" href="../html/log-out.html">Log Out</a>
-        </div>
-      </nav>
+    <header id="nav-header" class="navbar navbar-expand-lg sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../html/dashboard.html">
+          <img
+            src="../img/rkz-logo.jif"
+            alt="Logo"
+            width="30"
+            height="30"
+            class="d-inline-block align-top"
+          />
+        </a>
+
+        <nav class="nav-bar collapse navbar-collapse" id="navbarNav">
+          <div class="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
+            <a class="nav-link" href="../html/dashboard.html">Dashboard</a>
+            <a class="nav-link" href="../html/aanvraag.html">Aanvraag</a>
+            <a class="nav-link" href="../html/totale-voorraad.html"
+              >Totale Voorraad</a
+            >
+            <a class="nav-link" href="../html/statistieken.html"
+              >Statistieken</a
+            >
+            <a class="nav-link" href="../html/geschiedenis.html"
+              >Geschiedenis</a
+            >
+          </div>
+
+          <div class="navbar-nav nav-utils">
+            <a class="nav-link" href="../html/profile.html">Profiel</a>
+            <a class="nav-link" href="../html/settings.html">Instellingen</a>
+            <a class="nav-link text-danger" href="../html/inlog.html"
+              >Log Out</a
+            >
+          </div>
+        </nav>
+      </div>
     </header>
 
-    <main></main>
+    <main class="container-fluid py-4">
+      <h4 class="mb-4">Statistieken Overzicht</h4>
 
-    <footer></footer>
+      <!-- ===== TOP GRID ===== -->
+      <div class="row g-4">
+        <!-- Voorraad status verdeling -->
+        <div class="col-lg-6">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <h6 class="card-title">Voorraad status verdeling</h6>
+              <div class="chart-box">Grafiek placeholder</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categorie verdeling -->
+        <div class="col-lg-6">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <h6 class="card-title">Categorie verdeling</h6>
+              <div class="chart-box">Grafiek placeholder</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Huidige voorraadniveaus -->
+        <div class="col-lg-8">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <h6 class="card-title">Huidige voorraadniveaus (per item)</h6>
+              <div class="chart-box">Staafdiagram placeholder</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Belangrijke statistieken -->
+        <div class="col-lg-4">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <h6 class="card-title">Belangrijke statistieken</h6>
+
+              <ul class="stat-list">
+                <li><strong>Totale items:</strong> 120</li>
+                <li><strong>Kritieke items:</strong> 8</li>
+                <li><strong>Gem. verbruik/dag:</strong> 35</li>
+                <li><strong>Gem. tijd in opslag:</strong> 42 dagen</li>
+                <li><strong>Hoogste verbruik item:</strong> Paracetamol</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dagelijks gebruik -->
+        <div class="col-lg-6">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <h6 class="card-title">Dagelijks gebruik (laatste week)</h6>
+              <div class="chart-box">Lijngrafiek placeholder</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Maandelijks gebruik -->
+        <div class="col-lg-6">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <h6 class="card-title">Maandelijks gebruik (2025)</h6>
+              <div class="chart-box">Staafdiagram placeholder</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Jaarlijks gebruik vergelijking -->
+        <div class="col-lg-6">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <h6 class="card-title">Jaarlijks gebruik (vergelijking)</h6>
+              <div class="chart-box">Vergelijkingsgrafiek placeholder</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tijd in opslag -->
+        <div class="col-lg-6">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <h6 class="card-title">Tijd in opslag (gemiddeld per item)</h6>
+              <div class="chart-box">Grafiek placeholder</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
