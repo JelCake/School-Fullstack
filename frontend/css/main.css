@@ -1,4 +1,38 @@
+/* Website body and nav styling */
+#nav-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
 .main-dashboard {
   height: 10vh;
   padding: 5rem;
+}
+
+body {
+  background-color: #f4f6f9;
+}
+
+/* Cards styling for all pages*/
+.stat-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Table */
+.table thead th {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table td {
+  vertical-align: middle;
 }
