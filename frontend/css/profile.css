@@ -166,3 +166,34 @@ body.bg-rkz-blue {
 .btn-light {
   border: none;
 }
+
+/* Back to dashboard button */
+.profile-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.btn-dashboard-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 10px;
+  background-color: #1771D0;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 800; /* bold */
+  font-family: sans-serif;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.btn-dashboard-back:hover {
+  background-color: #125aa5;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.btn-dashboard-back:active {
+  transform: translateY(0);
+}

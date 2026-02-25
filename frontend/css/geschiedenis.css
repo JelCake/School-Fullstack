@@ -46,32 +46,96 @@ body.bg-rkz-blue {
   padding-top: 1.25rem;
 }
 
-.history-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.history-icon {
-  width: 2rem;
-  height: 2rem;
-  color: #1771D0;
-  flex-shrink: 0;
-}
-
-.history-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #111827;
-  font-family: sans-serif;
-  line-height: 1;
-  margin: 0;
-}
-
 .history-subtitle {
   font-size: 1.05rem;
   color: #617089;
   font-family: sans-serif;
   font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.history-card {
+  background-color: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.filter-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #1f2d3d;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.custom-select {
+  height: 42px;
+  border: 1px solid #cfd8e3;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #1f2d3d;
+}
+
+.custom-select:focus {
+  border-color: #2f80ed;
+  box-shadow: 0 0 0 0.18rem rgba(47, 128, 237, 0.2);
+}
+
+.history-table thead th {
+  background-color: #f7f9fc;
+  color: #1771D0;
+  font-weight: 700;
+  border-bottom: 1px solid #d9e2ef;
+  padding: 0.85rem 1rem;
+  white-space: nowrap;
+}
+
+.history-table tbody td {
+  color: #1f2d3d;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #edf1f6;
+  vertical-align: middle;
+}
+
+.history-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.note-input {
+  width: 100%;
+  min-width: 280px;
+  border: 1px dashed #b7c5d8;
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.95rem;
+  color: #1f2d3d;
+  background-color: #fbfdff;
+}
+
+.note-input::placeholder {
+  color: #8a99ad;
+}
+
+.note-input:focus {
+  outline: none;
+  border-color: #2f80ed;
+  box-shadow: 0 0 0 0.16rem rgba(47, 128, 237, 0.18);
+  background-color: #ffffff;
+}
+
+  }
+
+  .history-bar .history-title {
+    font-size: 1.3rem;
+  }
+
+  .history-table thead th,
+  .history-table tbody td {
+    padding: 0.75rem 0.75rem;
+    font-size: 0.93rem;
+  }
+
+  .note-input {
+    min-width: 220px;
+  }
 }
