@@ -1,47 +1,45 @@
+/* Page base */
 body.bg-rkz-blue {
   background-color: #f1f2f4 !important;
   color: #1f2d3d;
   font-family: sans-serif;
 }
 
+/* Navbar */
+#nav-header .nav-link {
+  color: #4b5563;
+  font-weight: 500;
+}
+
+#nav-header .nav-link:hover {
+  color: #1771d0;
+}
+
+#nav-header .nav-link.active {
+  color: #1771d0;
+  font-weight: 600;
+}
+
+/* History layout */
 .history-minimal {
   padding: 0;
   width: 100%;
   max-width: 100%;
 }
 
-.history-bar {
-  background-color: #1771D0;
-  padding: 0.75rem 1.5rem;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  box-sizing: border-box;
+/* Neutral title */
+.history-title-wrap {
+  background: transparent;
 }
 
-.history-bar .history-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 0;
-}
-
-.history-bar .history-icon {
-  width: 2rem;
-  height: 2rem;
-  color: #ffffff;
-  flex-shrink: 0;
-}
-
-.history-bar .history-title {
-  font-size: 1.5rem;
+.history-page-title {
+  font-size: 2rem;
   font-weight: 700;
-  color: #ffffff;
-  font-family: sans-serif;
-  line-height: 1;
-  margin: 0;
+  color: #111827;
+  line-height: 1.1;
 }
 
+/* Content spacing */
 .history-content {
   padding-top: 1.25rem;
 }
@@ -49,17 +47,18 @@ body.bg-rkz-blue {
 .history-subtitle {
   font-size: 1.05rem;
   color: #617089;
-  font-family: sans-serif;
   font-weight: 400;
   margin-bottom: 1rem;
 }
 
+/* Card look */
 .history-card {
   background-color: #ffffff;
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
 }
 
+/* Filter controls */
 .filter-label {
   display: block;
   margin-bottom: 0.5rem;
@@ -81,10 +80,13 @@ body.bg-rkz-blue {
   box-shadow: 0 0 0 0.18rem rgba(47, 128, 237, 0.2);
 }
 
+/* History table */
 .history-table thead th {
   background-color: #f7f9fc;
-  color: #1771D0;
+  color: #1771d0;
   font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
   border-bottom: 1px solid #d9e2ef;
   padding: 0.85rem 1rem;
   white-space: nowrap;
@@ -101,6 +103,7 @@ body.bg-rkz-blue {
   border-bottom: none;
 }
 
+/* Status field */
 .note-input {
   width: 100%;
   min-width: 280px;
@@ -123,15 +126,15 @@ body.bg-rkz-blue {
   background-color: #ffffff;
 }
 
-  }
-
-  .history-bar .history-title {
-    font-size: 1.3rem;
+/* Mobile */
+@media (max-width: 768px) {
+  .history-page-title {
+    font-size: 1.6rem;
   }
 
   .history-table thead th,
   .history-table tbody td {
-    padding: 0.75rem 0.75rem;
+    padding: 0.75rem;
     font-size: 0.93rem;
   }
 
