@@ -1,18 +1,16 @@
-/* Page base */
-body.bg-rkz-blue {
-  background-color: #f1f2f4 !important;
-  color: #1f2d3d;
-  font-family: sans-serif;
+.history-minimal {
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
 }
 
-/* Navbar */
-#nav-header .nav-link {
-  color: #4b5563;
-  font-weight: 500;
-}
-
-#nav-header .nav-link:hover {
-  color: #1771d0;
+.history-bar {
+  background-color: #1771d0;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #nav-header .nav-link.active {
@@ -51,11 +49,11 @@ body.bg-rkz-blue {
   margin-bottom: 1rem;
 }
 
-/* Card look */
-.history-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
+.history-icon {
+  width: 2rem;
+  height: 2rem;
+  color: #1771d0;
+  flex-shrink: 0;
 }
 
 /* Filter controls */
