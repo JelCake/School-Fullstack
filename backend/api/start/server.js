@@ -1,7 +1,16 @@
+// ============================================
+// ============================================
+// find a way to get this to work
+require("dotenv").config();
+// ============================================
+// ============================================
+// ============================================
+
 //required items for server to work
 const express = require("express");
 const server = express();
-const PORT = 3000;
+
+const PORT = process.env.PORT || 443;
 
 // ============================================
 // MIDDLEWARE
