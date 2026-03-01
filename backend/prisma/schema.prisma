@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Category {
+  categoryId   Int      @id @default(autoincrement())
+  categoryName String   @db.VarChar(100)
+  description  String?  @db.Text
+  items        Item[]
+
+  @@index([categoryId])
+}
+
+model Department {
+  departmentId   Int      @id @default(autoincrement())
+  departmentName String   @db.VarChar(100)
+  users          User[]
+
+  @@index([departmentId])
+}
+
+model Item {
+  itemId          Int       @id @default(autoincrement())
+  itemName        String    @db.VarChar(100)
+  remainingAmount Int       @default(0)
+  categoryId      Int
+  category        Category  @relation(fields: [categoryId], references: [categoryId])
+  requests        Request[]
+
+  @@index([categoryId])
+}
+
+model Request {
+  requestIndex    Int      @id @default(autoincrement())
+  requestId       Int
+  userId          Int
+  itemId          Int
+  amountRequested Int
+  requestDate     DateTime @db.DateTime(0)
+  user            User     @relation(fields: [userId], references: [userId])
+  item            Item     @relation(fields: [itemId], references: [itemId])
+
+  @@index([userId])
+  @@index([itemId])
+}
+
+model Role {
+  roleId Int    @id @default(autoincrement())
+  users  User[]
+
+  @@index([roleId])
+}
+
+model User {
+  userId       Int         @id @default(autoincrement())
+  firstName    String      @db.VarChar(100)
+  lastName     String      @db.VarChar(100)
+  email        String      @unique @db.VarChar(100)
+  pswd         String      @db.VarChar(100)
+  roleId       Int
+  departmentId Int
+  requests     Request[]
+  role         Role        @relation(fields: [roleId], references: [roleId])
+  department   Department  @relation(fields: [departmentId], references: [departmentId])
+
+  @@index([roleId])
+  @@index([departmentId])
+}
