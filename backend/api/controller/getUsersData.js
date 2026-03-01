@@ -1,3 +1,4 @@
+// ! doesn't actually works, but this whole controller file should be able to take out user data
 // userController.js
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -21,3 +22,5 @@ const getUser = async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 };
+
+module.exports = getUser;
