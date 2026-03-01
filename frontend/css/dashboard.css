@@ -1,6 +1,6 @@
 /* Soft dashboard background */
 .dashboard-bg {
-  background-color: #e6f2f4;
+  background-color: #bdbaba;
   min-height: 100vh;
 }
 
@@ -16,8 +16,11 @@
 }
 
 /* General card rounding */
+/* Update your existing .card rule */
 .card {
   border-radius: 15px;
+  overflow: hidden; /* This ensures the header background doesn't overlap the rounded corners */
+  border: none;     /* Optional: matching the 'border-0' style of your other pages */
 }
 
 /* Progress height */
