@@ -1,4 +1,4 @@
-// ! doesn't actually works, but this whole controller file should be able to take out user data
+// ! doesn't actually works, but this what the files in the controller file should look like and be able to take out specific data, username from users
 // userController.js
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
