@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -13,133 +7,104 @@ datasource db {
   provider = "mysql"
 }
 
+model categories {
+  categoryId   Int      @id @default(autoincrement())
+  categoryName String
+  description  String   @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+  items        items[]
+}
 
-
-model Department {
+model department {
   departmentId   Int      @id @default(autoincrement())
   departmentName String   @db.VarChar(100)
-  Users          Users[]
-
-  // Add timestamps to track when departments are created
   createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  updatedAt      DateTime
+  users          users[]
 }
 
-model Role {
-  roleId   Int      @id @default(autoincrement())
-  roleName String 
-  Users    Users[]
-}
-
-model Users {
-  userId       Int      @id @default(autoincrement())
-  firstName    String   @db.VarChar(50)
-  lastName     String   @db.VarChar(50)
-  email        String   @unique @db.VarChar(255)
-  password     String   @db.Text
-  roleId       Int
-  departmentId Int
-
-  Request Request[]
-  
-  // Timestamps are a "Must-Have" for debugging later
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  Role       Role       @relation(fields: [roleId], references: [roleId])
-  Department Department @relation(fields: [departmentId], references: [departmentId])
-
-  // Added Indexes for performance
-  @@index([roleId])
-  @@index([departmentId])
-}
-
-model Request {
-  requestId Int @id @default(autoincrement())
-  requestBatchId Int
-  requestedAmount Int 
-  requestedDate DateTime @default(now())
-
-
-  userId Int
-  itemId Int
-
-  Users Users @relation(fields: [userId], references: [userId])
-  Items Items @relation(fields: [itemId], references: [itemId])
-
-  @@index([userId])
-  @@index([itemId])
-
-  // Timestamps are a "Must-Have" for debugging later
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-}
-
-model Suppliers{
-  supplierId Int @id @default(autoincrement())
-  supplierName String @unique
-  Address String
-  Description String @db.MediumText 
-  contact String
-
-  Shipements Shipments[]
-
-  // Timestamps are a "Must-Have" for debugging later
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt  
-}
-
-model Shipments {
-  shipmentId Int @id @default(autoincrement())
-  GTIN Int @default(0)
-  deliveryDate DateTime @default(now())
-  shipmentBatchId Int
-  experationDate DateTime 
-  cost Int
-
-  itemId Int
-  supplierId Int
-
-  Items Items @relation(fields: [itemId], references: [itemId])
-  Suppliers Suppliers @relation(fields: [supplierId], references: [supplierId])
-
-  @@index([itemId])
-  @@index([supplierId])
-
-  // Timestamps are a "Must-Have" for debugging later
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-}
-
-model Categories{
-  categoryId Int @id @default(autoincrement())
-  categoryName String 
-  description String @db.Text
-
-  Items Items[]
-
-  // Timestamps are a "Must-Have" for debugging later
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-}
-
-model Items{
-  itemId Int @id @default(autoincrement())
-  itemName String 
-  description String @db.MediumText
+model items {
+  itemId          Int         @id @default(autoincrement())
+  itemName        String
+  description     String      @db.MediumText
   remainingAmount Int
-  dateModified DateTime @updatedAt
+  dateModified    DateTime
+  categoryId      Int
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime
+  categories      categories  @relation(fields: [categoryId], references: [categoryId], map: "Items_categoryId_fkey")
+  request         request[]
+  shipments       shipments[]
 
-  categoryId Int
+  @@index([categoryId], map: "Items_categoryId_idx")
+}
 
-  Categories Categories @relation(fields: [categoryId], references: [categoryId])
+model request {
+  requestId       Int      @id @default(autoincrement())
+  requestBatchId  Int
+  requestedAmount Int
+  requestedDate   DateTime @default(now())
+  userId          Int
+  itemId          Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime
+  items           items    @relation(fields: [itemId], references: [itemId], map: "Request_itemId_fkey")
+  users           users    @relation(fields: [userId], references: [userId], map: "Request_userId_fkey")
 
-  Shipements Shipments[]
-  Request Request[]
+  @@index([itemId], map: "Request_itemId_idx")
+  @@index([userId], map: "Request_userId_idx")
+}
 
-  @@index([categoryId])
+model role {
+  roleId   Int     @id @default(autoincrement())
+  roleName String
+  users    users[]
+}
 
-  // Timestamps are a "Must-Have" for debugging later
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+model shipments {
+  shipmentId      Int       @id @default(autoincrement())
+  GTIN            Int       @default(0)
+  deliveryDate    DateTime  @default(now())
+  shipmentBatchId Int
+  experationDate  DateTime
+  cost            Int
+  createdAt       DateTime  @default(now())
+  itemId          Int
+  supplierId      Int
+  updatedAt       DateTime
+  items           items     @relation(fields: [itemId], references: [itemId], map: "Shipments_itemId_fkey")
+  suppliers       suppliers @relation(fields: [supplierId], references: [supplierId], map: "Shipments_supplierId_fkey")
+
+  @@index([itemId], map: "Shipments_itemId_idx")
+  @@index([supplierId], map: "Shipments_supplierId_idx")
+}
+
+model suppliers {
+  supplierId   Int         @id @default(autoincrement())
+  supplierName String      @unique(map: "Suppliers_supplierName_key")
+  Address      String
+  Description  String      @db.MediumText
+  contact      String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime
+  shipments    shipments[]
+}
+
+model users {
+  userId       Int        @id @default(autoincrement())
+  firstName    String     @db.VarChar(50)
+  email        String     @unique(map: "Users_email_key") @db.VarChar(255)
+  password     String     @db.Text
+  departmentId Int
+  roleId       Int
+  createdAt    DateTime   @default(now())
+  lastName     String     @db.VarChar(50)
+  updatedAt    DateTime
+  request      request[]
+  department   department @relation(fields: [departmentId], references: [departmentId], map: "Users_departmentId_fkey")
+  role         role       @relation(fields: [roleId], references: [roleId], map: "Users_roleId_fkey")
+
+  @@index([departmentId], map: "Users_departmentId_idx")
+  @@index([roleId], map: "Users_roleId_idx")
 }
