@@ -3,8 +3,8 @@
 // ! ============================================
 
 // TODO find a way to get this to work
-import "dotenv/config";
 
+import "#utils/absoluteEnvPath";
 //required items for server to work
 import express from "express";
 
@@ -20,7 +20,7 @@ import statistiekenPage from "#routes/statistieken";
 import geschiedenisPage from "#routes/geschiedenis";
 
 //middleware
-import { view } from "#utils/viewHelper.js";
+import { view } from "#utils/viewHelper";
 // =============================================
 
 // *=============================================
@@ -28,7 +28,6 @@ import { view } from "#utils/viewHelper.js";
 const root = process.cwd();
 
 const server = express();
-const PORT = process.env.PORT || 443;
 // =============================================
 
 // ? ============================================
@@ -81,7 +80,9 @@ server.use((err, req, res, next) => {
 // START SERVER
 // ============================================
 
-server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`API available at http://localhost:${PORT}/api`);
+server.listen(process.env.SERVER_PORT, () => {
+  console.log(`Server running on http://localhost:${process.env.SERVER_PORT}`);
+  console.log(
+    `API available at http://localhost:${process.env.DATABASE_PORT}/api`,
+  );
 });

@@ -28,10 +28,5 @@
     "#controller/*": "./api/controller/*.js",
     "#routes/*": "./api/routes/*.js",
     "#services/*": "./api/services/*.js"
-  },
-  "compilerOptions": {
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
   }
 }
