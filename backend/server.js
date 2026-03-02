@@ -2,7 +2,7 @@
 // ! imports
 // ! ============================================
 
-// find a way to get this to work
+// TODO find a way to get this to work
 import "dotenv/config";
 
 //required items for server to work
