@@ -11,4 +11,3 @@ export const createUser = async (userData) => {
   });
 };
 
-fdfsfd;
