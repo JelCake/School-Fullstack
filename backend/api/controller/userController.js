@@ -1,3 +1,4 @@
+//Doesn actually do anything for now, just reference
 import * as userService from "#services/fetchUserInfo.js";
 
 export const getProfile = async (req, res) => {
