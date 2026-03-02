@@ -1,15 +1,15 @@
 // ============================================
 // ============================================
 // find a way to get this to work
-require("dotenv").config();
+import "dotenv/config";
 // ============================================
 // ============================================
 // ============================================
 
 //required items for server to work
-const express = require("express");
-const server = express();
+import express from "express";
 
+const server = express();
 const PORT = process.env.PORT || 443;
 
 // ============================================
@@ -23,13 +23,13 @@ server.use(express.json());
 // ROUTES ALIAS
 // ============================================
 
-//alias for page routes
-const loginPage = require("../routes/login");
-const dashboardPage = require("../routes/dashboard");
-const aanvragenPage = require("../routes/aanvragen");
-const totaleVoorraadPage = require("../routes/totale-voorraad");
-const statistiekenPage = require("../routes/statistieken");
-const geschiedenisPage = require("../routes/geschiedenis");
+// ! imports and alias for page routes
+import loginPage from "../routes/login.js";
+import dashboardPage from "../routes/dashboard.js";
+import aanvragenPage from "../routes/aanvragen.js";
+import totaleVoorraadPage from "../routes/totale-voorraad.js";
+import statistiekenPage from "../routes/statistieken.js";
+import geschiedenisPage from "../routes/geschiedenis.js";
 
 // ============================================
 // ROUTES
@@ -53,9 +53,9 @@ server.use("/api/statestieken", statistiekenPage);
 // route for the history
 server.use("/api/geschiedenis", geschiedenisPage);
 
-// ============================================
-// ERROR HANDLING
-// ============================================
+// ? ============================================
+// ? ERROR HANDLING
+// ? ============================================
 
 // Global error handler
 server.use((err, req, res, next) => {

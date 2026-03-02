@@ -2,14 +2,16 @@
  * This file is used for reaching each endpoint of the website
  */
 
-const express = require("express");
-const router = express.Router(); // Creates mini Express app
+// ! Imports
+import { sendToken } from "../Utils/tokenHandler.js"; // remember the .js!
+import express from "express";
 
+const router = express.Router(); // Creates mini Express app
 // ============================================
 // MIDDLEWARE
 // ============================================
 router.get("/", (req, res) => {
-  res.send("welcome to the login page");
+  sendToken();
 });
 
-module.exports = router; // Exports the router object
+export default router; // Modern export
