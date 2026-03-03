@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import { randomUUID } from "node:crypto";
+import "#utils/absoluteEnvPath";
+
 /**
  * Signs a JWT and attaches it to an HttpOnly cookie.
  * @param {Object} res - The Express response object.
@@ -26,12 +28,6 @@ export const generateToken = (userId, userRoleName, userDepartmentName) => {
   );
   return { success: true, token: token };
 };
-
-console.log("DEBUG: Secret is:", process.env.JWT_SECRET);
-const result = await generateToken(50, "bob", "bob");
-
-// This will print the whole long encoded string to your terminal
-console.log("THE FULL ENCODED TOKEN:", result.token);
 
 //* ProcessToken if it is valid, and also returns payload that is inide the token
 //verifies the jwt token and decodes it to get user info back

@@ -23,19 +23,27 @@ const validateLogin = async (req, res) => {
     return res.status(401).json({ message: "Invalid email or password" });
   }
 
+  //fetches user info
   const userInfo = await fetchUserInfo(userLogin.userId);
+  //uses user info to create a JWT
   const token = generateToken(
     userInfo.userId,
     userInfo.roleName,
     userInfo.departmentName,
   );
 
-  // * Make the client browser kill/delete the received token?
-  //   const ONE_HOUR = 1 * 60 * 60 * 1000;
-  //   const cookieOptions = {
-  //     maxAge: ONE_HOUR, // Automatically calculates the Date for you
-  // httpOnly: true,    // Essential for security
-  // sameSite: "strict", // Essential for security
-  // secure: process.env.NODE_ENV === "production", // Only HTTPS in prod
-  //   };
+  const ONE_HOUR = 3600000; // 1 * 60 * 60 * 1000
+
+  const cookieOptions = {
+    maxAge: ONE_HOUR,
+    // httpOnly: true,
+    // sameSite: "strict",
+    // secure: process.env.NODE_ENV === "production",
+  };
+
+  // The "Ending": Send the cookie and a success message
+  return res.status(200).cookie("token", token, cookieOptions).json({
+    success: true,
+    message: "Login successful",
+  });
 };
