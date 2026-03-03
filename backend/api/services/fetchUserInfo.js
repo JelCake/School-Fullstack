@@ -94,9 +94,17 @@ export const fetchUserInfo = async (userId) => {
   //! checks if the userInfo isn't null
   if (!userInfo) return { success: false };
 
+  //? flattens the giving data so we can access it easier
+  const flattenedUserInfo = {
+    userId: userInfo.userId,
+    email: userInfo.email,
+    roleName: userInfo.role?.roleName,
+    departmentName: userInfo.department?.departmentName,
+  };
+
   //return object with success appended in front
   return {
     success: true,
-    ...userInfo,
+    ...flattenedUserInfo,
   };
 };

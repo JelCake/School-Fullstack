@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
-
+import { randomUUID } from "node:crypto";
 /**
  * Signs a JWT and attaches it to an HttpOnly cookie.
  * @param {Object} res - The Express response object.
  * @param {Object} user - The user data to encode in the token.
  * @param {Object} userInformation - need to be an object with userId, userRole, userDepartment
  */
-export const generateToken = (res, user, userInformation) => {
+export const generateToken = (userId, userRoleName, userDepartmentName) => {
   //What fomat of data needs to be inserted into the userInformation params
   //? { userId: "bob", userRole: "meria", userDepartment: "henny" }
 
@@ -16,28 +16,31 @@ export const generateToken = (res, user, userInformation) => {
   const token = jwt.sign(
     {
       //! using prim userId key might not be the best
-      userId: userInformation.userId,
-      userRole: userInformation.userRole,
-      userDepartment: userInformation.userDepartment,
+      userId: userId,
+      userRoleName: userRoleName,
+      userDepartmentName: userDepartmentName,
       jti: randomUUID(),
     },
     process.env.JWT_SECRET,
     { expiresIn: "1h" },
   );
-
-  // * Make the client browser kill/delete the received token?
-  const ONE_HOUR = 1 * 60 * 60 * 1000;
-  const cookieOptions = {
-    maxAge: ONE_HOUR, // Automatically calculates the Date for you
-    // httpOnly: true,    // Essential for security
-    // sameSite: "strict", // Essential for security
-    // secure: process.env.NODE_ENV === "production", // Only HTTPS in prod
-  };
-
-  return res.status(200).cookie("token", token, cookieOptions).json({
-    success: true,
-    message: "Logged in successfully",
-  });
+  return { success: true, token: token };
 };
 
-export const verifyToken = () => {};
+console.log("DEBUG: Secret is:", process.env.JWT_SECRET);
+const result = await generateToken(50, "bob", "bob");
+
+// This will print the whole long encoded string to your terminal
+console.log("THE FULL ENCODED TOKEN:", result.token);
+
+//* ProcessToken if it is valid, and also returns payload that is inide the token
+//verifies the jwt token and decodes it to get user info back
+export const processToken = (userToken) => {
+  try {
+    const decodedToken = jwt.verify(userToken, process.env.JWT_SECRET);
+
+    return { success: true, tokenInfo: decodedToken };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
