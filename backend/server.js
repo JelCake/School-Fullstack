@@ -12,6 +12,7 @@ import express from "express";
 import path from "path";
 
 //imports and alias for page routes
+import rootApi from "#routes/root";
 import loginPage from "#routes/login";
 import dashboardPage from "#routes/dashboard";
 import aanvragenPage from "#routes/aanvragen";
@@ -57,6 +58,7 @@ server.get("/geschiedenis", view("geschiedenis"));
 // * ============================================
 //  API ROUTES
 // ============================================
+server.use("/api/", rootApi);
 server.use("/api/login", loginPage);
 server.use("/api/dashboard", dashboardPage);
 server.use("/api/aanvragen", aanvragenPage);
@@ -83,7 +85,5 @@ server.use((err, req, res, next) => {
 
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
-  console.log(
-    `API available at http://localhost:${process.env.DATABASE_PORT}/api`,
-  );
+  console.log(`API available at http://localhost:${process.env.PORT}/api`);
 });
