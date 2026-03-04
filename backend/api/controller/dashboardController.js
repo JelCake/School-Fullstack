@@ -2,6 +2,8 @@ import { postSpoedAanvraag } from "#services/postInfoToDatabase";
 import { fetchCrucialItemInfo, fetchAllItems } from "#services/fetchItemInfo";
 import { getCurrentOrNextReqBatchId } from "#services/fetchDatabaseInfo";
 import { fetchDepartmentId } from "#services/fetchDepartmentData";
+import { request } from "node:http";
+import { useReducer } from "react";
 
 //? Spoedaanvraag controller
 export const displaySpoedAanvraagData = async (req, res) => {};
@@ -26,13 +28,23 @@ export const sendSpoedAanvraag = async (req, res) => {
       message: "You have to enter a item or department",
     });
 
-  if (!userId) return { success: false, message: "Some JWT error" };
+  // Inside the Controller
+  if (!userId)
+    return res.status(401).json({
+      success: false,
+      message: "Invalid session/Invalid JWT decoding",
+    });
 
-  // !Might count incorrectly depending on some bug, since we aren't checking anything else
+  // !Might count incorrectly depending on some weird race condition
   // * but prob not a problem, since we are searching for the highest int of batchId
 
   //Get a request batch id, so +1 from the latest batchId
   const requestBatchId = await getCurrentOrNextReqBatchId(true);
+
+  if (!requestBatchId)
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to Contact DB" });
 
   // ! Users can still submit even if stock changed since their last fetch.
   // TODO: Add a real-time stock check against the DB before saving.
@@ -51,16 +63,19 @@ export const sendSpoedAanvraag = async (req, res) => {
   //Gets you the departmentId
   const departmentId = await fetchDepartmentId(departmentName);
 
+  //quick check that we actually have departmentId
+  if (!departmentId.success)
+    return res.status(404).json({ message: "Department not found" });
+
   // TODO need to change the db so it can take in more things
 
   //* Sends the post request to the db
-  postSpoedAanvraag(
+  const postingToDb = postSpoedAanvraag(
     userId,
-    requestBatchId,
     requestedItemsList,
-    departmentId,
+    departmentId.data.departmentId,
     textField,
-    getCurrentOrNextReqBatchId(true),
+    requestBatchId.data,
   );
 };
 

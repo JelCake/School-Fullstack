@@ -5,11 +5,10 @@ import { prisma } from "#utils/prismaClient";
  */
 export const postSpoedAanvraag = async (
   requesterId,
-  requestBatchId,
   requestedItems,
   departmentId,
   textField,
-  batchId,
+  requestbatchId,
 ) => {
   const sendAanvraag = await prisma.request.createMany({});
 };
