@@ -1,10 +1,15 @@
 import { processToken } from "#services/tokenHandler";
 
+// TODO FIle CAN be Rewritten
 //checks if the request has a token and if the token is still valid
 export const authenticateToken = (req, res, next) => {
   //supports token from cookie and fallback from Bearer header
+  //Bit 
   const cookieToken = req.cookies?.token;
+
+  // TODO authorization header shouldn't be inside the authentication middleware
   const authHeader = req.headers.authorization;
+  
   const bearerToken = authHeader?.startsWith("Bearer ")
     ? authHeader.split(" ")[1]
     : null;
