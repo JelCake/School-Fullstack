@@ -12,11 +12,10 @@ export const generateToken = (
   userId,
   userRoleName,
   userDepartmentName,
-  userFirstName = null,
-  userLastName = null,
+  // userFirstName = null,
+  // userLastName = null,
 ) => {
-  try {
-    //What fomat of data needs to be inserted into the userInformation params
+     //What fomat of data needs to be inserted into the userInformation params
     //? { userId: "bob", userRole: "meria", userDepartment: "henny" }
 
     //generates a jwt token
@@ -29,17 +28,14 @@ export const generateToken = (
         userRoleName: userRoleName,
         userDepartmentName: userDepartmentName,
         //optional name info for authorization/auditing
-        userFirstName: userFirstName,
-        userLastName: userLastName,
+        // userFirstName: userFirstName,
+        // userLastName: userLastName,
         jti: randomUUID(),
       },
       process.env.JWT_SECRET,
       { expiresIn: "1h" },
     );
     return { success: true, token: token };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
 };
 
 //* ProcessToken if it is valid, and also returns payload that is inide the token
