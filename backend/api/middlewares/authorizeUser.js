@@ -1,16 +1,13 @@
 //TODO moving magic numbers to a different file
 //TODO maybe we could create a larger function that handles differently
 //role-to-level map used for authorization checks
-const ROLE_AUTH_LEVEL = {
-  user: 1,
-  medewerker: 1,
-  employee: 1,
-  manager: 2,
-  admin: 3,
-};
+import { ROLE_AUTH_LEVEL } from "#utils/magicNumberFile";
 
 //normalizes text comparisons for role/department checks
-const normalizeValue = (value) => String(value || "").trim().toLowerCase();
+const normalizeValue = (value) =>
+  String(value || "")
+    .trim()
+    .toLowerCase();
 
 //checks if a logged-in user's role has enough permissions
 export const authorizeByLevel = (minimumLevel) => {

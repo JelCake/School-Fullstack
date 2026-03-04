@@ -3,24 +3,18 @@
  */
 
 import express from "express";
-import { authenticateToken } from "#middleware/authenticatie";
-import { authorizeByLevelAndDepartment } from "#middleware/authorisatie";
+import { authorizeByLevelAndDepartment } from "#middleware/authorizeUser";
 const router = express.Router(); // Creates mini Express app
 
 // ============================================
 // MIDDLEWARE
 // ============================================
-router.get(
-  "/",
-  authenticateToken,
-  authorizeByLevelAndDepartment(2),
-  (req, res) => {
+router.get("/", authorizeByLevelAndDepartment(2), (req, res) => {
   res.status(200).json({
     success: true,
     message: "Welcome to the totale-voorraad endpoint",
     user: req.user,
   });
-  },
-);
+});
 
 export default router;

@@ -2,8 +2,6 @@
 // ! imports
 // ! ============================================
 
-// TODO find a way to get this to work
-
 import "#utils/absoluteEnvPath";
 //required items for server to work
 import express from "express";
@@ -26,7 +24,7 @@ import geschiedenisPage from "#routes/geschiedenis";
 //middleware
 import { view } from "#utils/viewHelper";
 //Change the name of requireGuest
-import { authenticateToken, requireGuest } from "#middleware/authenticatie";
+import { authenticateToken } from "#middleware/authenticateToken";
 // =============================================
 
 // *=============================================
@@ -56,37 +54,25 @@ server.use(cookieParser());
 // ============================================
 //Proccess the file to only make the name(without .html) visible to the frontend
 // --- PAGE ROUTES (The HTML) ---
-<<<<<<< HEAD
 // TODO NEED TO FIX CSS NOT SHOWING
-// TODO RequireGuest Might not be needed, so check
-server.get("/", requireGuest, view("inlog"));
-server.get("/login", requireGuest, view("inlog"));
+server.get("/", view("inlog"));
+server.get("/login", view("inlog"));
 server.get("/dashboard", authenticateToken, view("dashboard"));
 server.get("/aanvragen", authenticateToken, view("aanvraag"));
 server.get("/totale-voorraad", authenticateToken, view("totale-voorraad"));
 server.get("/statistieken", authenticateToken, view("statistieken"));
 server.get("/geschiedenis", authenticateToken, view("geschiedenis"));
-=======
-// TODO NEED TO FIX CSS NOT SHOWING for login
-server.get("/", view("inlog"));
-server.get("/login", view("inlog"));
-server.get("/dashboard", view("dashboard"));
-server.get("/aanvragen", view("aanvraag"));
-server.get("/totale-voorraad", view("totale-voorraad"));
-server.get("/statistieken", view("statistieken"));
-server.get("/geschiedenis", view("geschiedenis"));
->>>>>>> github-desktop-JelOrg/main
 
 // * ============================================
 //  API ROUTES
 // ============================================
 server.use("/api/", rootApi);
 server.use("/api/login", loginPage);
-server.use("/api/dashboard", dashboardPage);
-server.use("/api/aanvragen", aanvragenPage);
-server.use("/api/totale-voorraad", totaleVoorraadPage);
-server.use("/api/statistieken", statistiekenPage);
-server.use("/api/geschiedenis", geschiedenisPage);
+server.use("/api/dashboard", authenticateToken, dashboardPage);
+server.use("/api/aanvragen", authenticateToken, aanvragenPage);
+server.use("/api/totale-voorraad", authenticateToken, totaleVoorraadPage);
+server.use("/api/statistieken", authenticateToken, statistiekenPage);
+server.use("/api/geschiedenis", authenticateToken, geschiedenisPage);
 
 // ? ============================================
 // ? ERROR HANDLING

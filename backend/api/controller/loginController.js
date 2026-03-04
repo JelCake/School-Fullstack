@@ -1,6 +1,9 @@
 import { fetchUserInfo, validateUserLogin } from "#services/fetchUserInfo";
 import { generateToken } from "#services/tokenHandler";
 
+//* importing magic numbers
+import { ONE_HOUR } from "#utils/magicNumberFile";
+
 //validates if the user login information is correct
 export const validateLogin = async (req, res) => {
   //what i want to get out of the body of the req.body
@@ -33,10 +36,6 @@ export const validateLogin = async (req, res) => {
     userInfo.roleName,
     userInfo.departmentName,
   );
-
-  // * could be placed somewhere else
-  const ONE_HOUR = 3600000; // 1 * 60 * 60 * 1000
-  //*=================
 
   //! prob security issues
   //Some extras so the client know what with the cookie
