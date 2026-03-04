@@ -1,8 +1,5 @@
 /* Soft dashboard background */
-.dashboard-bg {
-  background: linear-gradient(45deg, #22678b, #6ba9ca);
-  min-height: 100vh;
-}
+
 
 /* Spoed card */
 .spoed-card {
@@ -27,4 +24,8 @@
 .progress {
   height: 8px;
   border-radius: 10px;
+}
+
+.card-header h5{
+  color: black;
 }
