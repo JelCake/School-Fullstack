@@ -26,6 +26,7 @@ export const validateLogin = async (req, res) => {
 
   //fetches user info
   const userInfo = await fetchUserInfo(userLogin.userId);
+
   //uses user info to create a JWT
   const token = generateToken(
     userInfo.userId,
@@ -33,7 +34,9 @@ export const validateLogin = async (req, res) => {
     userInfo.departmentName,
   );
 
+  // * could be placed somewhere else
   const ONE_HOUR = 3600000; // 1 * 60 * 60 * 1000
+  //*=================
 
   const cookieOptions = {
     maxAge: ONE_HOUR,

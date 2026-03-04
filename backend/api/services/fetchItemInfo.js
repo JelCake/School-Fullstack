@@ -1,6 +1,7 @@
 import { prisma } from "#utils/prismaClient";
 
-//* can be used just to fetch all items inside the db, lets say for searching
+//* can be used just to fetch all items inside the db, lets say for displayning
+//* all that info
 //gets the lest of all general info for items
 export const fetchAllItem = async () => {
   const allItems = await prisma.items.findMany({
@@ -42,8 +43,5 @@ export const fetchAllItem = async () => {
   return { success: true, message: "Items found", data: allItemsFlattend };
 };
 
-const items = await fetchAllItem();
-console.log(items.data);
-
 //Get item info of one specific item
-export const fetchItemInfo = () => {};
+export const fetchCrucialItemInfo = () => {};
