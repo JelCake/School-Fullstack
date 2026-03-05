@@ -11,8 +11,8 @@ import geschiedenisPage from "#routes/geschiedenis";
 import { view } from "#utils/viewHelper";
 
 //Auth
-import { authenticateToken } from "#middleware/authenticateToken";
-import { getUserAuthorizationLevel } from "#middleware/authorizeUser";
+import { authenticateToken } from "#middleware/auth/authenticateToken";
+import { getUserAuthorizationLevel } from "#middleware/auth/authorizeUser";
 import { ROLE_AUTH_LEVEL } from "#utils/magicNumberFile";
 
 const protect = (requiredLevel) => {

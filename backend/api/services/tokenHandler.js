@@ -15,30 +15,31 @@ export const generateToken = (
   // userFirstName = null,
   // userLastName = null,
 ) => {
-     //What fomat of data needs to be inserted into the userInformation params
-    //? { userId: "bob", userRole: "meria", userDepartment: "henny" }
+  //What fomat of data needs to be inserted into the userInformation params
+  //? { userId: "bob", userRole: "meria", userDepartment: "henny" }
 
-    //generates a jwt token
+  //generates a jwt token
 
-    // 1. Create the stateless token
-    const token = jwt.sign(
-      {
-        //! using prim userId key might not be the best
-        userId: userId,
-        userRoleName: userRoleName,
-        userDepartmentName: userDepartmentName,
-        //optional name info for authorization/auditing
-        // userFirstName: userFirstName,
-        // userLastName: userLastName,
-        jti: randomUUID(),
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" },
-    );
-    return { success: true, token: token };
+  // 1. Create the stateless token
+  const token = jwt.sign(
+    {
+      //! using prim userId key might not be the best
+      userId: userId,
+      userRoleName: userRoleName,
+      userDepartmentName: userDepartmentName,
+      //optional name info for authorization/auditing
+      // userFirstName: userFirstName,
+      // userLastName: userLastName,
+      jti: randomUUID(),
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" },
+  );
+  return { success: true, token: token };
 };
 
 //* ProcessToken if it is valid, and also returns payload that is inide the token
+// TODO Always return an error, has to do with jwt.verify
 //verifies the jwt token and decodes it to get user info back
 export const processToken = (userToken) => {
   try {
