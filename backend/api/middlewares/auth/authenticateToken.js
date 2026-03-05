@@ -1,4 +1,4 @@
-import { generateToken, processToken } from "#services/tokenHandler";
+import { processToken } from "#services/tokenHandler";
 import { prisma } from "#utils/prismaClient";
 
 //checks if the request has a token and if the token is still valid
@@ -24,7 +24,11 @@ export const authenticateToken = async (req, res, next) => {
       where: {
         userId: processedToken.tokenInfo.userId,
       },
-      select: { userId: true, isActive: true },
+      select: {
+        isActive: true,
+        role: { select: { roleName: true } },
+        department: { select: { departmentName: true } },
+      },
     })
     .catch((err) => {
       // This will show exactly where it failed in your logs
@@ -32,9 +36,23 @@ export const authenticateToken = async (req, res, next) => {
       throw err;
     });
 
-  if (!user || !user.hasAccess) {
-    res.clearCookie("token");
+  // 1. Define the "Kick Out" logic once
+  const kickOut = () => {
+    res.clearCookie("token", { path: "/" });
     return res.redirect("/login?error=denied");
+  };
+
+  // 2. Run the checks
+  const isDeactivated = !user || !user.isActive;
+  const roleMismatch =
+    processedToken.tokenInfo.userRoleName !== user.role.roleName;
+  const deptMismatch =
+    processedToken.tokenInfo.userDepartmentName !==
+    user.department.departmentName;
+
+  // 3. One single if-statement to rule them all
+  if (isDeactivated || roleMismatch || deptMismatch) {
+    return kickOut();
   }
 
   //attach token payload for authorization middleware

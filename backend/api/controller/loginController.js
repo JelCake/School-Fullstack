@@ -2,7 +2,7 @@ import { fetchUserInfo, validateUserLogin } from "#services/fetchUserInfo";
 import { generateToken } from "#services/tokenHandler";
 
 //* importing magic numbers
-import { ONE_HOUR } from "#utils/magicNumberFile";
+import { HTTP_STATUS, ONE_HOUR } from "#utils/magicNumberFile";
 
 //TODO CHECK IF THE PASSWORD DECRYPT ACTUALLY WORKS AND THAT THE COOKIE IS SEND
 //validates if the user login information is correct
@@ -14,7 +14,7 @@ export const validateLogin = async (req, res) => {
   // TODO this actually is easy to get past with by inputting false or true
   if (!userEmail || !providedPassword) {
     return res
-      .status(400)
+      .status(HTTP_STATUS.BAD_REQUEST)
       .json({ message: "You have to put email or password" });
   }
   //validates that the user is giving the correct role, password, and
@@ -25,7 +25,9 @@ export const validateLogin = async (req, res) => {
   );
 
   if (!userLogin.success) {
-    return res.status(401).json({ message: "Invalid email or password" });
+    return res
+      .status(HTTP_STATUS.BAD_REQUEST)
+      .json({ message: "Invalid email or password" });
   }
 
   //fetches user info
@@ -48,7 +50,7 @@ export const validateLogin = async (req, res) => {
   };
 
   // The "Ending": Send the cookie and a success message
-  return res.status(200).cookie("token", token, cookieOptions).json({
+  return res.status(HTTP_STATUS.OK).cookie("token", token, cookieOptions).json({
     success: true,
     message: "Login successful",
     redirectTo: "/dashboard",

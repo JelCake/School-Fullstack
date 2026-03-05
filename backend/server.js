@@ -2,15 +2,19 @@
 // ! imports
 // ! ============================================
 
-import "#utils/absoluteEnvPath";
 //required items for server to work
 import express from "express";
+//cookie parser
 import cookieParser from "cookie-parser";
 //importing for pathing and url
 import path from "path";
 //removes the errors when trying from f12
 import cors from "cors";
 
+//
+import "#utils/absoluteEnvPath";
+import mainServerRouter from "./routingHub.js";
+import { HTTP_STATUS } from "#utils/magicNumberFile";
 // =============================================
 
 // *=============================================
@@ -38,7 +42,6 @@ server.use(cookieParser());
 //  PAGE ROUTER
 // ============================================
 //? Rate limiting?
-import mainServerRouter from "./routingHub.js";
 server.use("/", mainServerRouter);
 
 // ? ============================================
@@ -48,7 +51,7 @@ server.use("/", mainServerRouter);
 // Global error handler
 server.use((err, req, res, next) => {
   console.error("Error:", err.message);
-  res.status(500).json({
+  res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
     error: "Something went wrong!",
     message: err.message,
   });

@@ -1,12 +1,7 @@
 import { getCurrentOrNextReqBatchId } from "#services/fetchDatabaseInfo";
 import { fetchDepartmentId } from "#services/fetchDepartmentData";
 import { postToRequestTable } from "#services/postInfoToDatabase";
-
-// ==========================================
-// GET:
-// ==========================================
-//? Spoedaanvraag controller
-export const displaySpoedAanvraagData = async (req, res) => {};
+import { HTTP_STATUS, REFRESH_RATES } from "#utils/magicNumberFile";
 
 // ==========================================
 // POST: Create Urgent Request
@@ -26,14 +21,14 @@ export const sendSpoedAanvraag = async (req, res) => {
 
   //checking for any non gotten data
   if (!itemInfo || itemInfo.length === 0 || !departmentName)
-    return res.status(401).json({
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({
       success: false,
       message: "You have to enter a item or department",
     });
 
   // Inside the Controller
   if (!userId)
-    return res.status(401).json({
+    return res.status(HTTP_STATUS.NOT_FOUND).json({
       success: false,
       message: "Invalid session/Invalid JWT decoding",
     });
@@ -46,7 +41,7 @@ export const sendSpoedAanvraag = async (req, res) => {
 
   if (!requestBatchId)
     return res
-      .status(500)
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ success: false, message: "Failed to Contact DB" });
 
   //Gets you the departmentId
@@ -54,7 +49,7 @@ export const sendSpoedAanvraag = async (req, res) => {
 
   //quick check that we actually have departmentId
   if (!departmentId.success)
-    return res.status(404).json({ message: "Department not found" });
+    return res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Department not found" });
 
   // ! Users can still submit even if stock changed since their last fetch.
   // TODO: Add a real-time stock check against the DB before saving.
@@ -81,10 +76,10 @@ export const sendSpoedAanvraag = async (req, res) => {
 
   //checks if the posting is successful
   if (!postingToDb.success)
-    return res.status(400).json({ message: postingToDb.message });
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: postingToDb.message });
 
   // Finish with detail
-  return res.status(201).json({
+  return res.status(HTTP_STATUS.CREATED).json({
     success: true,
     message: "Spoedaanvraag successfully created!",
     count: postingToDb.count, // if your service returned the count
@@ -92,13 +87,33 @@ export const sendSpoedAanvraag = async (req, res) => {
 };
 
 // ==========================================
-// GET:
+// GET: Data for the dashboard. Creates a constant connection to db
 // ==========================================
 //? kritieke voorraad controllers
-export const getKritiekeVoorraad = async (req, res) => {};
-
-// ==========================================
-// GET:
-// ==========================================
 //? meldingen controller
-export const getMeldingen = async (req, res) => {};
+//? Spoedaanvraag controller
+export const fetchDashboardDisplayData = async (req, res) => {
+  // 1. One "Pipe" for the browser, keep Connection to DB open
+  res.writeHead(HTTP_STATUS.OK, {
+    "Content-Type": "text/event-stream",
+    Connection: "keep-alive",
+  });
+
+  const intervalId = setInterval(async () => {
+    try {
+      // 2. Fetch both pieces of data using the SAME Prisma instance
+      // Using Promise.all makes them fetch at the exact same time (Parallel)
+      const [vitals, info] = await Promise.all([
+        vitalsService.getLatest(req.),
+        infoService.getDetails(req.),
+      ]);
+
+      // 3. Send ONE combined JSON object
+      res.write(`data: ${JSON.stringify({ vitals, info })}\n\n`);
+    } catch (err) {
+      console.error("Dashboard Stream Error:", err);
+    }
+  }, REFRESH_RATES.CRITICAL_VITALS);
+
+  req.on("close", () => clearInterval(intervalId));
+};

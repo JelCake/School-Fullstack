@@ -1,5 +1,5 @@
 //role-to-level map used for authorization checks
-import { ROLE_AUTH_LEVEL } from "#utils/magicNumberFile";
+import { HTTP_STATUS, ROLE_AUTH_LEVEL } from "#utils/magicNumberFile";
 
 export const getUserAuthorizationLevel = (required) => (req, res, next) => {
   //Get the auth level based on the role in ROLE_AUTH_LEVEL
@@ -13,7 +13,8 @@ export const getUserAuthorizationLevel = (required) => (req, res, next) => {
 
   // 2. If level is too low, bounce to dashboard (with loop protection)
   if (userLevel < required) {
-    if (req.path === "/dashboard") return res.status(403).send("Forbidden");
+    if (req.path === "/dashboard")
+      return res.status(HTTP_STATUS.FORBIDDEN).send("Forbidden");
     return res.redirect("/dashboard?error=denied");
   }
 
