@@ -30,3 +30,7 @@ export const getCurrentOrNextReqBatchId = async (shouldIncrement = false) => {
     data: currenctBatchId + 1,
   };
 };
+
+export const fetchKritiekVoorraad = async () => {};
+
+export const fetchMeldingenAlert = async () => {};

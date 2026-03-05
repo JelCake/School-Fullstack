@@ -1,7 +1,16 @@
-import { getCurrentOrNextReqBatchId } from "#services/fetchDatabaseInfo";
+import {
+  fetchKritiekVoorraad,
+  fetchMeldingenAlert,
+  getCurrentOrNextReqBatchId,
+} from "#services/fetchDatabaseInfo";
 import { fetchDepartmentId } from "#services/fetchDepartmentData";
 import { postToRequestTable } from "#services/postInfoToDatabase";
-import { HTTP_STATUS, REFRESH_RATES } from "#utils/magicNumberFile";
+import { processToken } from "#services/tokenHandler";
+import {
+  HTTP_STATUS,
+  REFRESH_RATES,
+  VERIFY_INTERVAL,
+} from "#utils/magicNumberFile";
 
 // ==========================================
 // POST: Create Urgent Request
@@ -49,7 +58,9 @@ export const sendSpoedAanvraag = async (req, res) => {
 
   //quick check that we actually have departmentId
   if (!departmentId.success)
-    return res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Department not found" });
+    return res
+      .status(HTTP_STATUS.NOT_FOUND)
+      .json({ message: "Department not found" });
 
   // ! Users can still submit even if stock changed since their last fetch.
   // TODO: Add a real-time stock check against the DB before saving.
@@ -76,7 +87,9 @@ export const sendSpoedAanvraag = async (req, res) => {
 
   //checks if the posting is successful
   if (!postingToDb.success)
-    return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: postingToDb.message });
+    return res
+      .status(HTTP_STATUS.BAD_REQUEST)
+      .json({ message: postingToDb.message });
 
   // Finish with detail
   return res.status(HTTP_STATUS.CREATED).json({
@@ -86,6 +99,7 @@ export const sendSpoedAanvraag = async (req, res) => {
   });
 };
 
+//TODO TEST THIS, THIS MIGHT BE BUGGY
 // ==========================================
 // GET: Data for the dashboard. Creates a constant connection to db
 // ==========================================
@@ -93,27 +107,59 @@ export const sendSpoedAanvraag = async (req, res) => {
 //? meldingen controller
 //? Spoedaanvraag controller
 export const fetchDashboardDisplayData = async (req, res) => {
-  // 1. One "Pipe" for the browser, keep Connection to DB open
   res.writeHead(HTTP_STATUS.OK, {
     "Content-Type": "text/event-stream",
+    "Cache-Control": "no-cache", // Good for SSE
     Connection: "keep-alive",
   });
 
+  let lastVerified = Date.now();
+
   const intervalId = setInterval(async () => {
     try {
-      // 2. Fetch both pieces of data using the SAME Prisma instance
-      // Using Promise.all makes them fetch at the exact same time (Parallel)
-      const [vitals, info] = await Promise.all([
-        vitalsService.getLatest(req.),
-        infoService.getDetails(req.),
+      // 1. TRIGGER: Periodic Security Check (Every 5 mins)
+      if (Date.now() - lastVerified > VERIFY_INTERVAL) {
+        const isValid = processToken(req.cookies.token);
+        if (!isValid) {
+          // 1. Tell the frontend why we are stopping
+          res.write(
+            `event: auth_error\ndata: ${JSON.stringify({ url: "/login" })}\n\n`,
+          );
+
+          // 2. Kill the loop and the connection
+          clearInterval(intervalId);
+          return res.end();
+        }
+        lastVerified = Date.now();
+      }
+
+      // 2. Fetch both (using the names you defined)
+      const [voorraadData, alertsData] = await Promise.all([
+        fetchKritiekVoorraad(
+          req.userAuthLevel,
+          req.tokenInfo.userDepartmentName,
+        ),
+        fetchMeldingenAlert(
+          req.userAuthLevel,
+          req.tokenInfo.userDepartmentName,
+        ),
       ]);
 
-      // 3. Send ONE combined JSON object
-      res.write(`data: ${JSON.stringify({ vitals, info })}\n\n`);
+      // 3. Send combined JSON (Note: sanitized names match the fetch above)
+      res.write(
+        `data: ${JSON.stringify({
+          vitals: voorraadData,
+          info: alertsData,
+        })}\n\n`,
+      );
     } catch (err) {
       console.error("Dashboard Stream Error:", err);
+      // Optional: send a 'retry' or 'error' event to the client
     }
   }, REFRESH_RATES.CRITICAL_VITALS);
 
-  req.on("close", () => clearInterval(intervalId));
+  req.on("close", () => {
+    console.log("Client closed connection. Clearing interval.");
+    clearInterval(intervalId);
+  });
 };

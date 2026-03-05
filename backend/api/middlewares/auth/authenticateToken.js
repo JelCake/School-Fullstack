@@ -50,12 +50,11 @@ export const authenticateToken = async (req, res, next) => {
     processedToken.tokenInfo.userDepartmentName !==
     user.department.departmentName;
 
-  // 3. One single if-statement to rule them all
   if (isDeactivated || roleMismatch || deptMismatch) {
     return kickOut();
   }
 
-  //attach token payload for authorization middleware
+  //attachsss token payload for authorization middleware
   req.tokenInformation = processedToken.tokenInfo;
   next();
 };

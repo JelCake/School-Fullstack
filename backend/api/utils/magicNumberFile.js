@@ -44,3 +44,6 @@ export const HTTP_STATUS = {
   INTERNAL_SERVER_ERROR: 500,
   SERVICE_UNAVAILABLE: 503,
 };
+
+//Used for SSE
+export const VERIFY_INTERVAL = 5 * 60 * 1000; // 5 Minutes
