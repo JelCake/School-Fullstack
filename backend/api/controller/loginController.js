@@ -4,6 +4,7 @@ import { generateToken } from "#services/tokenHandler";
 //* importing magic numbers
 import { ONE_HOUR } from "#utils/magicNumberFile";
 
+//TODO CHECK IF THE PASSWORD DECRYPT ACTUALLY WORKS AND THAT THE COOKIE IS SEND
 //validates if the user login information is correct
 export const validateLogin = async (req, res) => {
   //what i want to get out of the body of the req.body
