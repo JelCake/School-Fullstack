@@ -39,7 +39,6 @@ export const generateToken = (
 };
 
 //* ProcessToken if it is valid, and also returns payload that is inide the token
-// TODO Always return an error, has to do with jwt.verify
 //verifies the jwt token and decodes it to get user info back
 export const processToken = (userToken) => {
   try {

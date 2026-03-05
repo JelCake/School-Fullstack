@@ -1,23 +1,23 @@
 import { processToken } from "#services/tokenHandler";
+import { generateToken } from "#services/tokenHandler";
 
 // TODO FIle CAN be Rewritten
 //checks if the request has a token and if the token is still valid
 export const authenticateToken = (req, res, next) => {
   //takes in a JWT non mobile token
-  const cookieToken = req.cookies?.token;
+  const cookieToken = generateToken(20, "employee", "roze");
+  // const cookieToken = req.cookies?.token;
 
-  // //Checks if a token is found
+  //Checks if a token is found
   if (!cookieToken) {
     // redirect if there is no token
     return res.redirect("/login");
   }
 
   //verifies token and decodes payload
-  const processedToken = processToken(cookieToken);
+  const processedToken = processToken(cookieToken.token);
 
-  console.log(processedToken);
-
-  // 4. Bad token? Clear it and EXIT then reroutes.
+  //4. Bad token? Clear it and EXIT then reroutes.
   if (!processedToken.success) {
     res.clearCookie("token");
     return res.redirect("/login");
@@ -28,6 +28,5 @@ export const authenticateToken = (req, res, next) => {
 
   //attach token payload for authorization middleware
   req.tokenInformation = processedToken.tokenInfo;
-
   next();
 };

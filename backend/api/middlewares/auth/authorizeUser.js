@@ -2,7 +2,8 @@
 import { ROLE_AUTH_LEVEL } from "#utils/magicNumberFile";
 
 export const getUserAuthorizationLevel = (required) => (req, res, next) => {
-  const userLevel = ROLE_AUTH_LEVEL[req.tokenInformation?.role];
+  //Get the auth level based on the role in ROLE_AUTH_LEVEL
+  const userLevel = ROLE_AUTH_LEVEL[req.tokenInformation?.userRoleName];
 
   // 1. If role is unrecognized, bounce to login
   if (!userLevel) return res.redirect("/login");
