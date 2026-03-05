@@ -58,3 +58,11 @@ export const authenticateToken = async (req, res, next) => {
   req.tokenInformation = processedToken.tokenInfo;
   next();
 };
+
+// TODO Actually have a way to autoredirect the user to dashboarrd if they acutally have a valid JWT Token
+export const isGuest = (req, res, next) => {
+  if (req.cookies && req.cookies.authToken) {
+    return res.redirect("/dashboard"); // Kick to dashboard
+  }
+  next(); // No token? Carry on to the Login screen.
+};
