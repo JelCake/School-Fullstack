@@ -5,6 +5,7 @@ import {
 } from "#services/fetchDatabaseInfo";
 import { fetchDepartmentId } from "#services/fetchDepartmentData";
 import { postToRequestTable } from "#services/postInfoToDatabase";
+import { closeSSESession } from "#services/SSEService";
 import { processToken, validateToken } from "#services/tokenHandler";
 import {
   HTTP_STATUS,
@@ -24,7 +25,8 @@ import {
  * @param {*} res
  */
 export const sendSpoedAanvraag = async (req, res) => {
-  //* The info from the spoedaanvraag form needs to be put into the database
+  //TODO ADD A THING TO THE DB THAT IS LIKE idURGENT to signify that the req is urgent
+  //TODO The info from the spoedaanvraag form needs to be put into the database
   const { userId, itemInfo, departmentName, textField } = req.body;
 
   //! Might have weird js behaviour
@@ -38,7 +40,7 @@ export const sendSpoedAanvraag = async (req, res) => {
 
   // Inside the Controller
   if (!userId)
-    return res.status(HTTP_STATUS.NOT_FOUND).json({
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: "Invalid session/Invalid JWT decoding",
     });
@@ -49,7 +51,7 @@ export const sendSpoedAanvraag = async (req, res) => {
   //Get a request batch id, so +1 from the latest batchId
   const requestBatchId = await getCurrentOrNextReqBatchId(true);
 
-  if (!requestBatchId)
+  if (!requestBatchId.succes)
     return res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ success: false, message: "Failed to Contact DB" });
@@ -60,7 +62,7 @@ export const sendSpoedAanvraag = async (req, res) => {
   //quick check that we actually have departmentId
   if (!departmentId.success)
     return res
-      .status(HTTP_STATUS.NOT_FOUND)
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ message: "Department not found" });
 
   // ! Users can still submit even if stock changed since their last fetch.
@@ -89,7 +91,7 @@ export const sendSpoedAanvraag = async (req, res) => {
   //checks if the posting is successful
   if (!postingToDb.success)
     return res
-      .status(HTTP_STATUS.BAD_REQUEST)
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ message: postingToDb.message });
 
   // Finish with detail
@@ -116,42 +118,42 @@ export const fetchDashboardDisplayData = async (req, res) => {
 
   let lastVerified = Date.now();
 
+  //Create a SSE connection, meaning you have an open connection to sever
   const intervalId = setInterval(async () => {
     try {
-      // 1. TRIGGER: Periodic Security Check (Every 5 mins)
+      // 1. Periodic security check
       if (Date.now() - lastVerified > VERIFY_INTERVAL) {
-        //TODO NEED TO MAKE THIS validate if the token is exactly like what is stored in the db
-        const isValid = await validateToken();
-        if (!isValid.success) {
-        }
+        //checks if the cookie isn't expired
+        const isActive = processToken(req.cookies?.token);
+
+        if (!isActive.success) return closeSSESession(res, intervalId);
+
+        const isValid = await validateToken(isActive.tokenInfo);
+
+        if (!isValid.success) return closeSSESession(res, intervalId);
+
         lastVerified = Date.now();
       }
 
-      // 2. Fetch both (using the names you defined)
+      //! This could be the cause for data nor being feteched
+      // 2. Fetch data
       const [voorraadData, alertsData] = await Promise.all([
         fetchKritiekVoorraad(
           req.userAuthLevel,
-          req.tokenInfo.userDepartmentName,
+          req.tokenInformation.userDepartmentName,
         ),
         fetchMeldingenAlert(
           req.userAuthLevel,
-          req.tokenInfo.userDepartmentName,
+          req.tokenInformation.userDepartmentName,
         ),
       ]);
 
-      // 3. Send combined JSON (Note: sanitized names match the fetch above)
-      // Change step 3 to this:
+      // 3. Send to client
       if (!res.writableEnded) {
-        res.write(
-          `data: ${JSON.stringify({
-            voorraadData: voorraadData,
-            alertsData: alertsData,
-          })}\n\n`,
-        );
+        res.write(`data: ${JSON.stringify({ voorraadData, alertsData })}\n\n`);
       }
     } catch (err) {
       console.error("Dashboard Stream Error:", err);
-      // Optional: send a 'retry' or 'error' event to the client
     }
   }, REFRESH_RATES.CRITICAL_VITALS);
 
