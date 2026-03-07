@@ -5,8 +5,18 @@ import { HTTP_STATUS, REFRESH_RATES } from "#utils/magicNumberFile";
 export const fetchStatistiekenDisplayData = async (req, res) => {
   try {
 
-    //TODO Add a jwt token check
-    //TODO Remove some limits
+      if (Date.now() - lastVerified > VERIFY_INTERVAL) {
+        //checks if the cookie isn't expired
+        const isActive = processToken(req.cookies?.token);
+
+        if (!isActive.success) return closeSSESession(res, intervalId);
+
+        const isValid = await validateToken(isActive.tokenInfo);
+
+        if (!isValid.success) return closeSSESession(res, intervalId);
+
+        lastVerified = Date.now();
+      }
     const requestedTopLimit = Number(req.query.topLimit || 10);
     const safeTopLimit = Number.isNaN(requestedTopLimit)
       ? 10
