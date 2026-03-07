@@ -6,6 +6,7 @@
  */
 
 import { HTTP_STATUS } from "#utils/magicNumberFile";
+<<<<<<< HEAD
 import { fetchAllItems } from "#services/fetchItemInfo";
 import express from "express";
 const router = express.Router();
@@ -17,6 +18,22 @@ router.get("/", async (req, res) => {
     console.error("[totale-voorraad GET] fout:", err);
     return { success: false, data: [] };
   });
+=======
+import express from "express";
+
+const router = express.Router(); // Creates mini Express app
+
+// ============================================
+// MIDDLEWARE
+// ============================================
+router.get("/", (req, res) => {
+  res.status(HTTP_STATUS.OK).json({
+    success: true,
+    message: "Welcome to the totale-voorraad endpoint",
+    user: req.user,
+  });
+});
+>>>>>>> github-desktop-JelOrg/main
 
   if (!result.success) {
     return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({

@@ -2,7 +2,6 @@
  * This file is used for reaching each endpoint of the website
  */
 
-import { fetchGeschiedenisDisplayData } from "#controller/geschiedenisController";
 import { HTTP_STATUS } from "#utils/magicNumberFile";
 import express from "express";
 const router = express.Router(); // Creates mini Express app
@@ -13,12 +12,9 @@ const router = express.Router(); // Creates mini Express app
 router.get("/", (req, res) => {
   res.status(HTTP_STATUS.OK).json({
     success: true,
-    message: "Welcome to the geschiedenis endpoint",
-    user: req.tokenInformation,
+    message: "Welcome to the statistieken endpoint",
+    user: req.user,
   });
 });
 
-//fetch top (default 10) recent request history data
-router.get("/fetch-display-data", fetchGeschiedenisDisplayData);
-
-export default router; // Modern export
+export default router;
