@@ -5,20 +5,19 @@
  */
 
 import { HTTP_STATUS } from "#utils/magicNumberFile";
-<<<<<<< HEAD
+
 import { getCurrentOrNextReqBatchId } from "#services/fetchDatabaseInfo";
 import { postToRequestTable, postRequestDescription } from "#services/postInfoToDatabase";
 import express from "express";
 const router = express.Router();
 
-=======
 import express from "express";
 const router = express.Router(); // Creates mini Express app
 
 // ============================================
 // MIDDLEWARE
 // ============================================
->>>>>>> github-desktop-JelOrg/main
+
 router.get("/", (req, res) => {
   res.status(HTTP_STATUS.OK).json({
     success: true,
