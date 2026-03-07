@@ -5,7 +5,11 @@ import {
 } from "#services/fetchDatabaseInfo";
 import { fetchDepartmentId } from "#services/fetchDepartmentData";
 import { postToRequestTable } from "#services/postInfoToDatabase";
-import { closeSSESession } from "#services/SSEService";
+import {
+  closeSSESession,
+  SSEHeader,
+  SSESessionCheck,
+} from "#services/SSEService";
 import { processToken, validateToken } from "#services/tokenHandler";
 import {
   HTTP_STATUS,
@@ -122,6 +126,7 @@ export const fetchDashboardDisplayData = async (req, res) => {
       //Checks if the session is still valid or active
       lastVerified = await SSESessionCheck(req, res, intervalId, lastVerified);
 
+      //TODO Need to check if you really need department name? or we could just not use it for now
       //! This could be the cause for data nor being feteched
       // 2. Fetch data
       const [voorraadData, alertsData] = await Promise.all([

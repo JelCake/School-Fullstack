@@ -1,5 +1,9 @@
 import { fetchRequestStatistics } from "#services/fetchRequestInfo";
-import { SSEHeader, SSESessionCheck } from "#services/SSEService";
+import {
+  closeSSESession,
+  SSEHeader,
+  SSESessionCheck,
+} from "#services/SSEService";
 import { HTTP_STATUS, REFRESH_RATES } from "#utils/magicNumberFile";
 
 //GET: returns statistics data for statistieken page
@@ -13,6 +17,8 @@ export const fetchStatistiekenDisplayData = async (req, res) => {
   //Create a SSE connection, meaning you have an open connection to sever
   const intervalId = setInterval(async () => {
     try {
+      //TODO Make this actually have a limit
+      //TODO Check if you really need a departmentName for now
       //Checks if the session is still valid or active
       lastVerified = await SSESessionCheck(req, res, intervalId, lastVerified);
 
@@ -44,4 +50,9 @@ export const fetchStatistiekenDisplayData = async (req, res) => {
       );
     }
   }, REFRESH_RATES.SYSTEM_STATUS);
+
+  req.on("close", () => {
+    console.log("Client closed connection. Clearing interval.");
+    clearInterval(intervalId);
+  });
 };

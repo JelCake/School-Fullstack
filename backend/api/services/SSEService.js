@@ -1,5 +1,5 @@
 import { HTTP_STATUS, VERIFY_INTERVAL } from "#utils/magicNumberFile";
-import { processToken, validateToken } from "./tokenHandler";
+import { processToken, validateToken } from "#services/tokenHandler";
 
 /**
  * CLoses SSE session
@@ -34,6 +34,14 @@ export const SSEHeader = (res) => {
   });
 };
 
+/**
+ * COMBINED SSE SERVICE with token verify and closing service
+ * @param {*} req
+ * @param {*} res
+ * @param {*} intervalId
+ * @param {*} lastVerified
+ * @returns
+ */
 export const SSESessionCheck = async (req, res, intervalId, lastVerified) => {
   if (Date.now() - lastVerified > VERIFY_INTERVAL) {
     //checks if the cookie isn't expired

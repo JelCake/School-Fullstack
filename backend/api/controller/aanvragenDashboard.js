@@ -1,22 +1,19 @@
-import {
-  fetchKritiekVoorraad,
-  fetchMeldingenAlert,
-  getCurrentOrNextReqBatchId,
-} from "#services/fetchDatabaseInfo";
+import { getCurrentOrNextReqBatchId } from "#services/fetchDatabaseInfo";
 import { fetchDepartmentId } from "#services/fetchDepartmentData";
 import { postToRequestTable } from "#services/postInfoToDatabase";
 import { HTTP_STATUS } from "#utils/magicNumberFile";
 
 // ==========================================
-// POST: Create Urgent Request
+// POST: Create Nomal Aanvraag
 // ==========================================
+//TODO THIS HAS TO BE A NORMAL AANVRAAG, SO THE TABLE COULD HOLD 1 FOR URGENT AND 0 FOR NON URGEN
 //! Will cause race condition, due to multiple users being able to request
 //! the same item making it possible to see 2 or more different remainingAmount items
 /**
  * @param {*} req
  * @param {*} res
  */
-export const sendSpoedAanvraag = async (req, res) => {
+export const sendNormaleAanvraag = async (req, res) => {
   //TODO ADD A THING TO THE DB THAT IS LIKE idURGENT to signify that the req is urgent
   //TODO The info from the spoedaanvraag form needs to be put into the database
   const { userId, itemInfo, departmentName, textField } = req.body;

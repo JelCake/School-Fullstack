@@ -3,19 +3,18 @@ import {
   fetchMeldingenAlert,
   getCurrentOrNextReqBatchId,
 } from "#services/fetchDatabaseInfo";
-import { closeSSESession } from "#services/SSEService";
-import { processToken, validateToken } from "#services/tokenHandler";
 import {
-  HTTP_STATUS,
-  REFRESH_RATES,
-  VERIFY_INTERVAL,
-} from "#utils/magicNumberFile";
+  closeSSESession,
+  SSEHeader,
+  SSESessionCheck,
+} from "#services/SSEService";
+import { REFRESH_RATES } from "#utils/magicNumberFile";
 
 //TODO TEST THIS, THIS MIGHT BE BUGGY
 // ==========================================
 // GET: TotaleVoorraad controller
 // ==========================================
-export const fetchDashboardDisplayData = async (req, res) => {
+export const fetchTotalVoorraadData = async (req, res) => {
   //Header for what is needed in the header of a SSE
   SSEHeader(res);
   let lastVerified = Date.now();

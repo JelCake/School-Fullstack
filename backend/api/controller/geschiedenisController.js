@@ -1,4 +1,9 @@
 import { fetchRecentRequestsHistory } from "#services/fetchRequestInfo";
+import {
+  closeSSESession,
+  SSEHeader,
+  SSESessionCheck,
+} from "#services/SSEService";
 import { HTTP_STATUS, REFRESH_RATES } from "#utils/magicNumberFile";
 
 //GET: returns latest request history rows for geschiedenis page
@@ -51,4 +56,9 @@ export const fetchGeschiedenisDisplayData = async (req, res) => {
       });
     }
   }, REFRESH_RATES.STANDARD_DASHBOARD);
+
+  req.on("close", () => {
+    console.log("Client closed connection. Clearing interval.");
+    clearInterval(intervalId);
+  });
 };
