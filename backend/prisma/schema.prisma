@@ -50,6 +50,7 @@ model request {
   itemId          Int
   requestedAmount Int
   isUrgent Boolean
+  isCompleted Boolean
   requestedDate   DateTime @default(now())
   userId          Int
   departmentId Int

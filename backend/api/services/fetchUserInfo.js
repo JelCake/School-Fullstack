@@ -2,34 +2,6 @@
 import { prisma } from "#utils/prismaClient";
 import bcrypt from "bcrypt";
 
-// Example: Fetch all records from a table
-// Replace 'user' with your actual model name
-async function exampleFunction(userId) {
-  const allUsers = await prisma.users.findUnique({
-    where: {
-      userId: userId,
-    },
-    select: {
-      userId: true,
-      firstName: true,
-      lastName: true,
-      role: {
-        select: {
-          roleName: true,
-        },
-      },
-      department: {
-        select: {
-          departmentName: true,
-        },
-      },
-    },
-  });
-  console.log("All users:", JSON.stringify(allUsers, null, 2));
-}
-
-// * Actual funcs
-
 //!A way to get the data from the DB so you can COMPARE it with what the user send during LOGIN
 /**
  * uses @param - userEmail, providedPassword  to get the user password info, and also validates if the login password is correct

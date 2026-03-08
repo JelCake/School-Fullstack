@@ -1,19 +1,19 @@
 import {
-  fetchKritiekVoorraad,
-  fetchMeldingenAlert,
+  fetchKritiekeVoorraad,
   getCurrentOrNextReqBatchId,
 } from "#services/fetchDatabaseInfo";
 import { fetchDepartmentId } from "#services/fetchDepartmentData";
+import { fetchUrgentRequest } from "#services/fetchRequestInfo";
 import { postToRequestTable } from "#services/postInfoToDatabase";
 import {
   closeSSESession,
   SSEHeader,
   SSESessionCheck,
 } from "#services/SSEService";
-import { processToken, validateToken } from "#services/tokenHandler";
 import {
   HTTP_STATUS,
   REFRESH_RATES,
+  TAKE_LIMIT,
   VERIFY_INTERVAL,
 } from "#utils/magicNumberFile";
 
@@ -136,19 +136,22 @@ export const fetchDashboardDisplayData = async (req, res) => {
       //! This could be the cause for data nor being feteched
       // 2. Fetch data
       const [voorraadData, alertsData] = await Promise.all([
-        fetchKritiekVoorraad(
+        fetchKritiekeVoorraad(
           req.userAuthLevel,
           req.tokenInformation.userDepartmentName,
         ),
-        fetchMeldingenAlert(
+        fetchUrgentRequest(
           req.userAuthLevel,
           req.tokenInformation.userDepartmentName,
         ),
       ]);
 
+      const kritiekeVoorraadData = voorraadData.data;
+      const spoedAanvraagenData = alertsData.data;
+
       // 3. Send to client
       if (!res.writableEnded) {
-        res.write(`data: ${JSON.stringify({ voorraadData, alertsData })}\n\n`);
+        res.write(`data: ${JSON.stringify({})}\n\n`);
       }
     } catch (err) {
       console.error("Dashboard Stream Error:", err);

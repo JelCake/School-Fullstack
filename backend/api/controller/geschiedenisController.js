@@ -1,9 +1,5 @@
 import { fetchRecentRequestsHistory } from "#services/fetchRequestInfo";
-import {
-  closeSSESession,
-  SSEHeader,
-  SSESessionCheck,
-} from "#services/SSEService";
+import { SSEHeader, SSESessionCheck } from "#services/SSEService";
 import { HTTP_STATUS, REFRESH_RATES } from "#utils/magicNumberFile";
 
 //GET: returns latest request history rows for geschiedenis page

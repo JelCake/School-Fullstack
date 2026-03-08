@@ -1,8 +1,3 @@
-import {
-  fetchKritiekVoorraad,
-  fetchMeldingenAlert,
-  getCurrentOrNextReqBatchId,
-} from "#services/fetchDatabaseInfo";
 import { fetchAllItems } from "#services/fetchItemInfo";
 import {
   closeSSESession,
