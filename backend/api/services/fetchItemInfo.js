@@ -33,7 +33,7 @@ export const fetchAllItems = async () => {
   }
 
   //needs to user .map, because we are gettin multiple items
-  const allItemsFlattend = allItems.map((item) => {
+  const allItemsData = allItems.map((item) => {
     return {
       itemId: item.itemId,
       itemName: item.itemName,
@@ -45,7 +45,7 @@ export const fetchAllItems = async () => {
     };
   });
 
-  return { success: true, message: "Items found", data: allItemsFlattend };
+  return { success: true, message: "Items found", data: allItemsData };
 };
 
 //Get item info of one specific item

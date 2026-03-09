@@ -151,7 +151,9 @@ export const fetchDashboardDisplayData = async (req, res) => {
 
       // 3. Send to client
       if (!res.writableEnded) {
-        res.write(`data: ${JSON.stringify({})}\n\n`);
+        res.write(
+          `data: ${JSON.stringify({ kritiekeVoorraadData, spoedAanvraagenData })}\n\n`,
+        );
       }
     } catch (err) {
       console.error("Dashboard Stream Error:", err);
@@ -163,3 +165,5 @@ export const fetchDashboardDisplayData = async (req, res) => {
     clearInterval(intervalId);
   });
 };
+
+console.log(await fetchKritiekeVoorraad(3, "roze"));

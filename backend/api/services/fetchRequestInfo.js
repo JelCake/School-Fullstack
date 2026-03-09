@@ -1,6 +1,7 @@
 import { TAKE_LIMIT, TAKE_LIMIT_URGENT_REQUEST } from "#utils/magicNumberFile";
 import { prisma } from "#utils/prismaClient";
 
+//!==== wont work
 //builds a where-filter based on auth level and department
 const buildDepartmentScopeFilter = (userAuthLevel, userDepartmentName) => {
   //manager/admin can view all departments
@@ -92,6 +93,7 @@ export const fetchRecentRequestsHistory = async ({
     data: mappedHistory,
   };
 };
+//!====
 
 //fetches statistics overview data for the statistics page
 //TODO we can increase or remove limits, since we need to get a lot of data for the statistics
@@ -165,6 +167,7 @@ export const fetchRequestStatistics = async ({
     },
   };
 };
+//!====
 
 //! For fecthing All urgent request
 export const fetchUrgentRequest = async (userAuthLevel, departmentName) => {
@@ -192,7 +195,7 @@ export const fetchUrgentRequest = async (userAuthLevel, departmentName) => {
     });
 
   if (!urgentRequest || urgentRequest.length === 0) {
-    return { success: false, message: "No urgent requests found." };
+    return { success: false, message: "No urgent requests found.", data: [] };
   }
 
   const flattendItems = urgentRequest.map((request) => ({
@@ -211,6 +214,3 @@ export const fetchUrgentRequest = async (userAuthLevel, departmentName) => {
     data: flattendItems,
   };
 };
-
-const something = await fetchUrgentRequest();
-console.log(something);

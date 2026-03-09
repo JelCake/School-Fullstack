@@ -19,7 +19,20 @@ export const fetchTotalVoorraadData = async (req, res) => {
   const intervalId = setInterval(async () => {
     try {
       //Checks if the session is still valid or active
-      lastVerified = await SSESessionCheck(req, res, intervalId, lastVerified);
+      const SSESession = await SSESessionCheck(
+        req,
+        res,
+        intervalId,
+        lastVerified,
+      );
+
+      if (!SSESession || !SSESession.success)
+        return {
+          success: false,
+          message: "O noooo... Our SSE... It's Broken... :{",
+        };
+
+      lastVerified = SSESession.lastVerified;
 
       //! This could be the cause for data nor being feteched
       // 2. Fetch data
