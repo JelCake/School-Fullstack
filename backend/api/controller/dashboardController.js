@@ -82,6 +82,7 @@ export const sendSpoedAanvraag = async (req, res) => {
    * Example: [ { itemId: 101, itemName: "Hammer", requestedAmount: 2 },
    * {itemId: something, itemName: somethingelse, requestedAmount: again} ]
    */
+  //!Bugged
   console.log(
     "This is buggy(sending increasing by one request), and request amount should be changed to what the actual person is sending",
   );
@@ -112,7 +113,6 @@ export const sendSpoedAanvraag = async (req, res) => {
   return res.status(HTTP_STATUS.CREATED).json({
     success: true,
     message: "Spoedaanvraag successfully created!",
-    count: postingToDb.count, // if your service returned the count
   });
 };
 

@@ -18,7 +18,7 @@ export const sendNormaleAanvraag = async (req, res) => {
   //TODO The info from the spoedaanvraag form needs to be put into the database
   //* Item info is send as an object, needs to hold itemId, itemName, and amount requested
   const { itemInfo, textField } = req.body;
-  const { userId, departmentName } = req.tokenInformation;
+  const { userId, userDepartmentName } = req.tokenInformation;
 
   //! Might have weird js behaviour
 
@@ -30,7 +30,7 @@ export const sendNormaleAanvraag = async (req, res) => {
     });
 
   // Inside the Controller
-  if (!userId || !departmentName)
+  if (!userId || !userDepartmentName)
     return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: "Invalid session/Invalid JWT decoding",
@@ -48,7 +48,7 @@ export const sendNormaleAanvraag = async (req, res) => {
       .json({ success: false, message: "Failed to Contact DB" });
 
   //Gets you the departmentId
-  const departmentId = await fetchDepartmentId(departmentName);
+  const departmentId = await fetchDepartmentId(userDepartmentName);
 
   //quick check that we actually have departmentId
   if (!departmentId.success || !departmentId.data?.departmentId)
@@ -92,6 +92,5 @@ export const sendNormaleAanvraag = async (req, res) => {
   return res.status(HTTP_STATUS.CREATED).json({
     success: true,
     message: "Spoedaanvraag successfully created!",
-    count: postingToDb.count, // if your service returned the count
   });
 };
