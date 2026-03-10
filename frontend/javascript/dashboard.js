@@ -93,9 +93,8 @@ function renderKritiekeVoorraad(items) {
       (item) => `
     <tr>
       <td>${item.itemName ?? "-"}</td>
-      <td>${item.category ?? "-"}</td>
-      <td><span class="badge bg-danger">${item.currentStock}</span></td>
-      <td>${item.minimumStock}</td>
+      <td>${item.categoryName ?? "-"}</td>
+      <td><span class="badge bg-danger">${item.remainingAmount}</span></td>
     </tr>
   `,
     )
@@ -120,7 +119,6 @@ function renderKritiekeVoorraad(items) {
           <th>Naam</th>
           <th>Categorie</th>
           <th>Huidige voorraad</th>
-          <th>Minimum</th>
         </tr>
       </thead>
       <tbody>${rows}</tbody>
