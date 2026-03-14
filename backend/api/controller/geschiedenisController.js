@@ -46,14 +46,9 @@ export const fetchGeschiedenisDisplayData = async (req, res) => {
         return; // stop this interval tick, but keep connection alive
       }
 
-      res.write(
-        `data: ${JSON.stringify({
-          success: true,
-          message: historyResult.message,
-          data: historyResult.data,
-          count: historyResult.data.length,
-        })}\n\n`,
-      );
+      const historyData = historyResult.data;
+
+      res.write(`data: ${JSON.stringify({ historyData })}\n\n`);
     } catch (error) {
       res.write(
         `data: ${JSON.stringify({
