@@ -21,9 +21,9 @@ async function postAanvraag() {
     return;
   }
 
-  const btn = document.querySelector(".btn-primary");
-  btn.disabled = true;
-  btn.textContent = "Bezig met versturen...";
+  // const btn = document.querySelector("versturen");
+  // btn.disabled = true;
+  // btn.textContent = "Bezig met versturen...";
 
   try {
     const response = await fetch("/api/aanvragen/send-normale-aanvraag", {
@@ -70,5 +70,10 @@ function clearForm() {
   document.getElementById("naam-supply-selecter").value = "";
   document.getElementById("naam-afdeling-selector").value = "";
   document.querySelector('textarea[name="opmerkingen"]').value = "";
-  document.getElementById("normal").checked = true;
 }
+
+//Makes the pages fucntional
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("versturen").addEventListener("click", postAanvraag);
+  document.getElementById("wissen").addEventListener("click", clearForm);
+});

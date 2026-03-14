@@ -29,15 +29,6 @@ export const fetchTotalVoorraadData = async (req, res) => {
 
       lastVerified = isValid.lastVerified;
 
-      if (!SSESession || !SSESession.success)
-        return {
-          success: false,
-          message: "O noooo... Our SSE... It's Broken... :{",
-        };
-
-      lastVerified = SSESession.lastVerified;
-
-      //! This could be the cause for data nor being feteched
       // 2. Fetch data
       const voorraadData = await fetchAllItems();
 

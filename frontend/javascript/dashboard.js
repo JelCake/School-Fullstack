@@ -147,7 +147,32 @@ function initDashboardSSE() {
   };
 }
 
-//Actually starts the sse stream
+// ─── SSE ──────────────────────────────────────────────────────────
+function initDashboardSSE() {
+  const eventSource = new EventSource("/api/dashboard/fetch-display-data", {
+    withCredentials: true,
+  });
+
+  eventSource.onmessage = (event) => {
+    const { kritiekeVoorraadData, spoedAanvraagenData } = JSON.parse(
+      event.data,
+    );
+    renderKritiekeVoorraad(kritiekeVoorraadData);
+    renderMeldingen(spoedAanvraagenData);
+  };
+
+  //! Send a lot of errors.
+  // eventSource.onerror = (err) => {
+  //   console.error("SSE fout:", err);
+  //   eventSource.close();
+  //   setTimeout(initDashboardSSE, 3000); // reconnect after 3s
+  // };
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
+  document
+    .getElementById("btn-spoed-versturen")
+    .addEventListener("click", postSpoedAanvraag);
   initDashboardSSE();
 });
